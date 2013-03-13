@@ -3,10 +3,11 @@
 #include <string>
 #include <iostream>
 #include <cinttypes>
+#include "Reader.h"
 
 class JsonScanner {
 	public:
-		JsonScanner( std::istream & in );
+		JsonScanner( std::istream * in );
 		JsonScanner( std::string & str );
 		virtual std::string getNextToken();
 	private:
@@ -16,9 +17,11 @@ class JsonScanner {
 			START,
 			STRING,
 			DIGIT,
+			INTEGER,
+			REAL,
 			TRUE,
 			FALSE,
-			NULL
+			JSON_NULL
 		};
 };
 
