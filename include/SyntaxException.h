@@ -2,7 +2,7 @@
 #define SYNTAX_EXCEPTION_H
 #include <exception>
 
-class SyntaxException : public exception {
+class SyntaxException : public std::exception {
 	public:
 		SyntaxException( char * message ) : m_message( message ) { };
 		virtual const char *  what() const throw() {
