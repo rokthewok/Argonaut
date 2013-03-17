@@ -21,5 +21,7 @@ JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h
 	g++ $(CFLAGS) -c $(src)JsonScanner.cpp -o $(bin)JsonScanner.o
 Reader.o : Reader.h Reader.cpp
 	g++ $(CFLAGS) -c $(src)Reader.cpp -o $(bin)Reader.o
+test :
+	# TODO build all test classes and main test file
 clean :
 	rm -f bin/*.o argonaut

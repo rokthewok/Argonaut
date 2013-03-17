@@ -36,11 +36,38 @@ std::string JsonScanner::getNextToken() {
 
 		c = m_reader->getNextChar();
 		while( true ) {
-			if( isdigit( c ) ) {
-				token.push_back( c );
-			} else if( c == '.' ) {
-				token.push_back( c );
-			}
+			c = m_reader->getNextChar();
+
+			if( isBlankOrNewLine( c ) ) return token;
+
+			switch( state ) {
+			case ScannerState::INTEGER:
+				if( isdigit( c ) ) {
+					token.push_back( c );
+				} else if( c == '.' ) {
+					state = ScannerState::REAL;
+					token.push_back( c );
+				} else {
+					// TODO throw syntax error here
+					return "error";
+				}
+				break;
+			case ScannerState::REAL;
+				if( isdigit( c ) ) {
+					token.push_back( c );
+				} else {
+					// TODO throw syntax error here
+					return "error";
+				}
+				break;
+			default:
+				return "error";
+			};
 		}
 	}
+}
+
+bool JsonScanner::isBlankOrNewline( char c ) {
+	static std::string characters( "\n\r\t " );
+	return characters.find( c ) != std::string::npos ? true : false;
 }

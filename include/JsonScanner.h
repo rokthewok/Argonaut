@@ -23,6 +23,8 @@ class JsonScanner {
 			FALSE,
 			JSON_NULL
 		};
+
+		bool isBlankOrNewline( char c );
 };
 
 #endif
