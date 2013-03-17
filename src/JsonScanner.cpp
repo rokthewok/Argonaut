@@ -38,7 +38,7 @@ std::string JsonScanner::getNextToken() {
 		while( true ) {
 			c = m_reader->getNextChar();
 
-			if( isBlankOrNewLine( c ) ) return token;
+			if( isBlankOrNewline( c ) ) return token;
 
 			switch( state ) {
 			case ScannerState::INTEGER:
@@ -52,7 +52,7 @@ std::string JsonScanner::getNextToken() {
 					return "error";
 				}
 				break;
-			case ScannerState::REAL;
+			case ScannerState::REAL:
 				if( isdigit( c ) ) {
 					token.push_back( c );
 				} else {

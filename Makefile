@@ -8,13 +8,13 @@ incl = include/
 src = src/
 bin = bin/
 
-obj = main.o JsonScanner.o Reader.o #SyntaxException.o
-binobj = $(bin)main.o $(bin)JsonScanner.o $(bin)Reader.o #$(bin)SyntaxException.o
+obj = argonaut.o JsonScanner.o Reader.o #SyntaxException.o
+binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o #$(bin)SyntaxException.o
 
 argonaut : $(obj)
 	g++ -o argonaut $(binobj)
-main.o : main.cpp JsonScanner.o
-	g++ $(CFLAGS) -c $(src)main.cpp -o $(bin)main.o
+argonaut.o : argonaut.cpp JsonScanner.o
+	g++ $(CFLAGS) -c $(src)argonaut.cpp -o $(bin)argonaut.o
 #SyntaxException.o : SyntaxException.h
 #	g++ $(CFLAGS) -c $(incl)SyntaxException.h -o $(bin)SyntaxException.o
 JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h
