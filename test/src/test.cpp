@@ -2,7 +2,7 @@
 #include <string>
 #include "JsonScannerTests.h"
 
-void printResults( std::string & testName, bool result, bool end ) {
+void printResults( std::string testName, bool result, bool end ) {
 	static unsigned int passed = 0;
 	static unsigned int total = 0;
 
@@ -22,9 +22,10 @@ void printResults( std::string & testName, bool result, bool end ) {
 
 int main( int argc, char ** argv ) {
 	bool end = true;
-	JsonScannerTests jsonScannerTests;
+	std::string testString( "test" );
+	JsonScannerTests jsonScannerTests( testString );
 
-	printResults( "testIsBlankOrNewLine", jsonScannerTests.testIsBlankOrNewline(), end );
+	printResults( JsonScannerTests::IsBlankOrNewline, jsonScannerTests.testIsBlankOrNewline(), end );
 
 	return 0;
 }

@@ -10,6 +10,8 @@ class JsonScanner {
 		JsonScanner( std::istream * in );
 		JsonScanner( std::string & str );
 		virtual std::string getNextToken();
+	protected:
+		bool isBlankOrNewline( char c );
 	private:
 		Reader * m_reader;
 
@@ -23,8 +25,6 @@ class JsonScanner {
 			FALSE,
 			JSON_NULL
 		};
-
-		bool isBlankOrNewline( char c );
 };
 
 #endif
