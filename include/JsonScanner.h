@@ -4,12 +4,13 @@
 #include <iostream>
 #include <cinttypes>
 #include "Reader.h"
+#include "JsonToken"
 
 class JsonScanner {
 	public:
 		JsonScanner( std::istream * in );
 		JsonScanner( std::string & str );
-		virtual std::string getNextToken();
+		virtual JsonToken getNextToken();
 	protected:
 		bool isBlankOrNewline( char c );
 	private:

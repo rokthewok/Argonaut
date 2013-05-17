@@ -1,6 +1,7 @@
 #include <cctype>
 #include "JsonScanner.h"
 #include "JsonTypes.h"
+#include "JsonToken.h"
 //#include "SyntaxException.h"
 
 JsonScanner::JsonScanner( std::istream * in )
@@ -13,7 +14,7 @@ JsonScanner::JsonScanner( std::string & str )
 
 }
 
-std::string JsonScanner::getNextToken() {
+JsonToken JsonScanner::getNextToken() {
 	char c;
 	std::string token;
 	ScannerState state = ScannerState::START;
