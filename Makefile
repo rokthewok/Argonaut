@@ -9,8 +9,8 @@ src = src/
 bin = bin/
 test = test/
 
-obj = argonaut.o JsonScanner.o Reader.o #SyntaxException.o
-binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o #$(bin)SyntaxException.o
+obj = argonaut.o JsonScanner.o Reader.o JsonToken.o #SyntaxException.o
+binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o #$(bin)SyntaxException.o
 testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o
 testbinobj =  $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o
 
@@ -20,8 +20,10 @@ argonaut.o : argonaut.cpp JsonScanner.o
 	g++ $(CFLAGS) -c $(src)argonaut.cpp -o $(bin)argonaut.o
 #SyntaxException.o : SyntaxException.h
 #	g++ $(CFLAGS) -c $(incl)SyntaxException.h -o $(bin)SyntaxException.o
-JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h
+JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h JsonToken.h JsonToken.o
 	g++ $(CFLAGS) -c $(src)JsonScanner.cpp -o $(bin)JsonScanner.o
+JsonToken.o : JsonToken.h JsonTypes.h JsonToken.cpp
+	g++ $(CFLAGS) -c $(src)JsonToken.cpp -o $(bin)JsonToken.o
 Reader.o : Reader.h Reader.cpp
 	g++ $(CFLAGS) -c $(src)Reader.cpp -o $(bin)Reader.o
 test : $(testobj)

@@ -8,7 +8,10 @@ enum class JsonTypes : std::int8_t {
 	INTEGER = 1,
 	REAL = 2,
 	STRING = 3,
-	ARRAY  = 4
+	ARRAY  = 4,
+	BRACE = 5,
+	COMMA = 6,
+	COLON = 7
 };
 
 #endif

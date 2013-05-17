@@ -14,19 +14,21 @@ JsonScanner::JsonScanner( std::string & str )
 
 }
 
-JsonToken JsonScanner::getNextToken() {
+JsonToken * JsonScanner::getNextToken() {
 	char c;
+	JsonToken * jsonToken = nullptr;
 	std::string token;
 	ScannerState state = ScannerState::START;
 
 	c = m_reader->getNextChar();
 	if( c == '\0' ) {
-		return token;
+		return jsonToken;
 	}
 
 	if( c == '{' || c == '}' ) {
 		token.push_back( c );
-		return token;
+		jsonToken = new JsonToken( JsonTypes::BRACE, token );
+		return jsonToken; 
 	} else if( isdigit( c ) || c == '.' ) {
 		if( c == '.' ) {
 			state = ScannerState::REAL;
@@ -39,7 +41,7 @@ JsonToken JsonScanner::getNextToken() {
 		while( true ) {
 			c = m_reader->getNextChar();
 
-			if( isBlankOrNewline( c ) ) return token;
+			if( isBlankOrNewline( c ) ) return jsonToken;
 
 			switch( state ) {
 			case ScannerState::INTEGER:
@@ -50,7 +52,7 @@ JsonToken JsonScanner::getNextToken() {
 					token.push_back( c );
 				} else {
 					// TODO throw syntax error here
-					return "error";
+					return jsonToken;
 				}
 				break;
 			case ScannerState::REAL:
@@ -58,11 +60,11 @@ JsonToken JsonScanner::getNextToken() {
 					token.push_back( c );
 				} else {
 					// TODO throw syntax error here
-					return "error";
+					return jsonToken;
 				}
 				break;
 			default:
-				return "error";
+				return jsonToken;
 			};
 		}
 	}
