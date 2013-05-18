@@ -2,7 +2,6 @@
 #include "JsonScanner.h"
 #include "JsonTypes.h"
 #include "JsonToken.h"
-//#include "SyntaxException.h"
 
 JsonScanner::JsonScanner( std::istream * in )
 	: m_reader( new Reader( in ) ) {
@@ -67,6 +66,12 @@ JsonToken * JsonScanner::getNextToken() {
 				return jsonToken;
 			};
 		}
+	}
+}
+
+void JsonScanner::readToken( JsonToken * jsonToken, std::string & token ) {
+	while( true ) {
+		
 	}
 }
 
