@@ -11,8 +11,8 @@ test = test/
 
 obj = argonaut.o JsonScanner.o Reader.o JsonToken.o #SyntaxException.o
 binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o #$(bin)SyntaxException.o
-testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o
-testbinobj =  $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o
+testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o
+testbinobj =  $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o
 
 argonaut : $(obj)
 	g++ -o argonaut $(binobj)

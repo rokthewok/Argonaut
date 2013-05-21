@@ -22,10 +22,14 @@ void printResults( std::string testName, bool result, bool end ) {
 
 int main( int argc, char ** argv ) {
 	bool end = true;
-	std::string testString( "test" );
-	JsonScannerTests jsonScannerTests( testString );
+	std::string test = "test";
+	JsonScannerTests jsonScannerTests( test );
 
-	printResults( JsonScannerTests::IsBlankOrNewline, jsonScannerTests.testIsBlankOrNewline(), end );
+	printResults( JsonScannerTests::IS_BLANK_OR_NEWLINE, jsonScannerTests.testIsBlankOrNewline(), false );
+	std::string nine = "9";
+	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, jsonScannerTests.testReturnIntegerToken( nine ), false );
+	std::string hey = "hey";
+	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, !jsonScannerTests.testReturnIntegerToken( hey ), end );
 
 	return 0;
 }

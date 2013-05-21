@@ -5,11 +5,14 @@
 
 class JsonScannerTests : private JsonScanner {
 	public:
-		explicit JsonScannerTests( std::string & testString );
+		explicit JsonScannerTests( std::string & test );
 		bool testIsBlankOrNewline();
+		bool testReturnIntegerToken( std::string & testString );
 
-		static const std::string IsBlankOrNewline;
+		static const std::string IS_BLANK_OR_NEWLINE;
+		static const std::string RETURN_INTEGER_TOKEN;
 	private:
+		JsonScanner * m_scanner;
 };
 
 #endif

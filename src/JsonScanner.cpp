@@ -71,7 +71,7 @@ JsonToken * JsonScanner::getNextToken() {
 
 void JsonScanner::readToken( JsonToken * jsonToken, std::string & token ) {
 	while( true ) {
-		
+			
 	}
 }
 
