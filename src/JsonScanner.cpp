@@ -17,6 +17,7 @@ JsonToken * JsonScanner::getNextToken() {
 	char c;
 	JsonToken * jsonToken = nullptr;
 	std::string token;
+	JsonTypes type;
 	ScannerState state = ScannerState::START;
 
 	c = m_reader->getNextChar();
@@ -28,44 +29,48 @@ JsonToken * JsonScanner::getNextToken() {
 		token.push_back( c );
 		jsonToken = new JsonToken( JsonTypes::BRACE, token );
 		return jsonToken; 
-	} else if( isdigit( c ) || c == '.' ) {
+	} else if( isdigit( c ) || c == '-' || c == '.' ) {
 		if( c == '.' ) {
 			state = ScannerState::REAL;
+			type = JsonTypes::REAL;
 		} else {
 			state = ScannerState::INTEGER;
+			type = JsonTypes::INTEGER;
 		}
 		token.push_back( c );
+	} else {
+		return jsonToken;
+	}
 
+	while( true ) {
 		c = m_reader->getNextChar();
-		while( true ) {
-			c = m_reader->getNextChar();
 
-			if( isBlankOrNewline( c ) ) return jsonToken;
+		if( isBlankOrNewline( c ) || c == '\0' ) return new JsonToken( type, token );
 
-			switch( state ) {
-			case ScannerState::INTEGER:
-				if( isdigit( c ) ) {
-					token.push_back( c );
-				} else if( c == '.' ) {
-					state = ScannerState::REAL;
-					token.push_back( c );
-				} else {
-					// TODO throw syntax error here
-					return jsonToken;
-				}
-				break;
-			case ScannerState::REAL:
-				if( isdigit( c ) ) {
-					token.push_back( c );
-				} else {
-					// TODO throw syntax error here
-					return jsonToken;
-				}
-				break;
-			default:
+		switch( state ) {
+		case ScannerState::INTEGER:
+			if( isdigit( c ) ) {
+				token.push_back( c );
+			} else if( c == '.' ) {
+				state = ScannerState::REAL;
+				type = JsonTypes::REAL;
+				token.push_back( c );
+			} else {
+				// TODO throw syntax error here
 				return jsonToken;
-			};
-		}
+			}
+			break;
+		case ScannerState::REAL:
+			if( isdigit( c ) ) {
+				token.push_back( c );
+			} else {
+				// TODO throw syntax error here
+				return jsonToken;
+			}
+			break;
+		default:
+			return jsonToken;
+		};
 	}
 }
 
