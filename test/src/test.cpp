@@ -28,8 +28,14 @@ int main( int argc, char ** argv ) {
 	printResults( JsonScannerTests::IS_BLANK_OR_NEWLINE, jsonScannerTests.testIsBlankOrNewline(), false );
 	std::string nine = "9";
 	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, jsonScannerTests.testReturnIntegerToken( nine ), false );
-	std::string hey = "hey";
-	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, !jsonScannerTests.testReturnIntegerToken( hey ), end );
+	nine = "hey";
+	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, !jsonScannerTests.testReturnIntegerToken( nine ), false );
+	std::string brace = "{";
+	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, jsonScannerTests.testReturnBraceToken( brace ), false );
+	brace = "}";
+	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, jsonScannerTests.testReturnBraceToken( brace ), false );
+	brace = "not a brace";
+	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, !jsonScannerTests.testReturnBraceToken( brace ), end );
 
 	return 0;
 }
