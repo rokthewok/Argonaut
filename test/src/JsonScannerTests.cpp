@@ -21,7 +21,7 @@ bool JsonScannerTests::testReturnIntegerToken( std::string & testString ) {
 
 	bool result = false;
 	if( token != nullptr && token->getType() == JsonTypes::INTEGER ) {
-		bool result = true;
+		result = true;
 	}
 
 	if( token != nullptr ) delete token;
