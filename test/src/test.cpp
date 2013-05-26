@@ -30,12 +30,24 @@ int main( int argc, char ** argv ) {
 	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, jsonScannerTests.testReturnIntegerToken( nine ), false );
 	nine = "hey";
 	printResults( JsonScannerTests::RETURN_INTEGER_TOKEN, !jsonScannerTests.testReturnIntegerToken( nine ), false );
+	
 	std::string brace = "{";
 	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, jsonScannerTests.testReturnBraceToken( brace ), false );
 	brace = "}";
 	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, jsonScannerTests.testReturnBraceToken( brace ), false );
 	brace = "not a brace";
-	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, !jsonScannerTests.testReturnBraceToken( brace ), end );
-
+	printResults( JsonScannerTests::RETURN_BRACE_TOKEN, !jsonScannerTests.testReturnBraceToken( brace ), false );
+	
+	std::string boolean = "true";
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, jsonScannerTests.testReturnBooleanToken( boolean ), false );
+	boolean = "false";
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, jsonScannerTests.testReturnBooleanToken( boolean ),  false );
+	boolean = "ture";
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), false );
+	boolean = "flase";
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), false );
+	boolean = "oops";
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), end );
+	
 	return 0;
 }

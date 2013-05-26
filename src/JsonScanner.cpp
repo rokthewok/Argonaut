@@ -40,6 +40,11 @@ JsonToken * JsonScanner::getNextToken() {
 		token.push_back( c );
 		
 		return readNumberToken( state, type, token );
+	} else if( c == 't' || c == 'f' ) {
+		token.push_back( c );
+		return readBooleanToken( token );
+	} else if( c == '"' ) {
+
 	} else {
 		return jsonToken;
 	}
@@ -92,7 +97,41 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 }
 
 JsonToken * JsonScanner::readBooleanToken( std::string & token ) {
+	char c;
+	char next = token == "t" ? 'r' : 'a';
+	JsonTypes type = JsonTypes::BOOLEAN;
+	ScannerState state = token == "t" ? ScannerState::TRUE : ScannerState::FALSE;
 
+	while( true ) {
+		c = m_reader->getNextChar();
+
+		switch ( state ) {
+			case ScannerState::TRUE:
+				if( c == next ) {
+					token.push_back( c );
+					if( next == 'r' ) next = 'u';
+					else if( next == 'u' ) next = 'e';
+					else return new JsonToken( type, token );
+				} else {
+					return nullptr;
+				}
+				break;
+			case ScannerState::FALSE:
+				if( c == next ) {
+					token.push_back( c );
+					if( next == 'a' ) next = 'l';
+					else if( next == 'l' ) next = 's';
+					else if( next == 's' ) next = 'e';
+					else return new JsonToken( type, token );
+				} else {
+					return nullptr;
+				}
+				break;
+			default:
+				return nullptr;
+				break;
+		}
+	}
 }
 
 JsonToken * JsonScanner::readNullToken( std::string & token ) {
