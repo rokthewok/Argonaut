@@ -14,9 +14,6 @@ class JsonScanner {
 	protected:
 		bool isBlankOrNewline( char c );
 	private:
-		void readToken( JsonToken * jsonToken, std::string & token );
-		Reader * m_reader;
-
 		enum class ScannerState : uint8_t {
 			START,
 			STRING,
@@ -27,6 +24,12 @@ class JsonScanner {
 			FALSE,
 			JSON_NULL
 		};
+
+		JsonToken * readNumberToken( ScannerState state, JsonTypes type, std::string & token );
+		JsonToken * readStringToken( std::string & token );
+		JsonToken * readBooleanToken( std::string & token );
+		JsonToken * readNullToken( std::string & token );
+		Reader * m_reader;
 };
 
 #endif

@@ -38,10 +38,16 @@ JsonToken * JsonScanner::getNextToken() {
 			type = JsonTypes::INTEGER;
 		}
 		token.push_back( c );
+		
+		return readNumberToken( state, type, token );
 	} else {
 		return jsonToken;
 	}
+}
 
+JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, std::string & token ) {
+	char c;
+	
 	while( true ) {
 		c = m_reader->getNextChar();
 
@@ -57,7 +63,7 @@ JsonToken * JsonScanner::getNextToken() {
 				token.push_back( c );
 			} else {
 				// TODO throw syntax error here
-				return jsonToken;
+				return nullptr;
 			}
 			break;
 		case ScannerState::REAL:
@@ -65,19 +71,32 @@ JsonToken * JsonScanner::getNextToken() {
 				token.push_back( c );
 			} else {
 				// TODO throw syntax error here
-				return jsonToken;
+				return nullptr;
 			}
 			break;
 		default:
-			return jsonToken;
+			return nullptr;
 		};
 	}
 }
 
-void JsonScanner::readToken( JsonToken * jsonToken, std::string & token ) {
+JsonToken * JsonScanner::readStringToken( std::string & token ) {
+	char c;
+	JsonTypes type = JsonTypes::STRING;
+
 	while( true ) {
-			
+		if( isBlankOrNewline( c ) || c == '\0' ) return new JsonToken( type, token );
+
+		
 	}
+}
+
+JsonToken * JsonScanner::readBooleanToken( std::string & token ) {
+
+}
+
+JsonToken * JsonScanner::readNullToken( std::string & token ) {
+
 }
 
 bool JsonScanner::isBlankOrNewline( char c ) {
