@@ -13,10 +13,13 @@ class JsonScanner {
 		virtual JsonToken * getNextToken();
 	protected:
 		bool isBlankOrNewline( char c );
+		bool isSpecialChar( char c );
+
 	private:
 		enum class ScannerState : uint8_t {
 			START,
 			STRING,
+			SP_CHAR,
 			DIGIT,
 			INTEGER,
 			REAL,
