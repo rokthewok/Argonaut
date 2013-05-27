@@ -47,7 +47,16 @@ int main( int argc, char ** argv ) {
 	boolean = "flase";
 	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), false );
 	boolean = "oops";
-	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), end );
-	
+	printResults( JsonScannerTests::RETURN_BOOLEAN_TOKEN, !jsonScannerTests.testReturnBooleanToken( boolean ), false );
+
+	std::string null = "null";
+	printResults( JsonScannerTests::RETURN_NULL_TOKEN, jsonScannerTests.testReturnNullToken( null ), false );
+	null = "nul";
+	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), false );
+	null = "nil";
+	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), false );
+	null = "totally not null";
+	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), end );
+
 	return 0;
 }

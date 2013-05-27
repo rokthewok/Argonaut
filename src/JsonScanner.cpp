@@ -46,6 +46,9 @@ JsonToken * JsonScanner::getNextToken() {
 	} else if( c == '\"' ) {
 		token.push_back( c );
 		return readStringToken( token );
+	} else if( c == 'n' ) {
+		token.push_back( c );
+		return readNullToken( token );
 	} else {
 		return jsonToken;
 	}
@@ -157,7 +160,29 @@ JsonToken * JsonScanner::readBooleanToken( std::string & token ) {
 }
 
 JsonToken * JsonScanner::readNullToken( std::string & token ) {
+	char c;
+	char next = 'u';
 
+	while( true ) {
+		c = m_reader->getNextChar();
+
+		if( c == next ) {
+			token.push_back( c );
+			if( next == 'u' ) next = 'l';
+			else if( next == 'l' ) break;
+		} else {
+			return nullptr;
+		}
+	}
+
+	c = m_reader->getNextChar();
+
+	if( c == 'l' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::NULLTYPE, token );
+	} else {
+		return nullptr;
+	}
 }
 
 bool JsonScanner::isBlankOrNewline( char c ) {
@@ -166,6 +191,6 @@ bool JsonScanner::isBlankOrNewline( char c ) {
 }
 
 bool JsonScanner::isSpecialChar( char c ) {
-	static std::string characters( "\"\\\/\b\f\n\r\t" );
+	static std::string characters( "\"\\/\b\f\n\r\t" );
 	return characters.find( c ) != std::string::npos ? true : false;
 }
