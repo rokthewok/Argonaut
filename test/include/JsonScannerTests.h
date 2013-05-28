@@ -11,6 +11,7 @@ class JsonScannerTests : private JsonScanner {
 		bool testReturnBraceToken( std::string & testString );
 		bool testReturnBooleanToken( std::string & testString );
 		bool testReturnNullToken( std::string & testString );
+		bool testReturnStringToken( std::string & testString );
 
 		static const std::string IS_BLANK_OR_NEWLINE;
 		static const std::string RETURN_INTEGER_TOKEN;

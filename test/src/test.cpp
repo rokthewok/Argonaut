@@ -56,7 +56,11 @@ int main( int argc, char ** argv ) {
 	null = "nil";
 	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), false );
 	null = "totally not null";
-	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), end );
+	printResults( JsonScannerTests::RETURN_NULL_TOKEN, !jsonScannerTests.testReturnNullToken( null ), false );
+
+
+	std::string str = "\"this is my string.\"";
+	printResults( JsonScannerTests::RETURN_STRING_TOKEN, jsonScannerTests.testReturnStringToken( str ), end );
 
 	return 0;
 }
