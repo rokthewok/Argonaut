@@ -1,4 +1,5 @@
 #include <string>
+#include <iostream>
 #include "JsonScannerTests.h"
 
 JsonScannerTests::JsonScannerTests( std::string & test ) 
@@ -81,9 +82,9 @@ bool JsonScannerTests::testReturnStringToken( std::string & testString ) {
 
 	bool result = false;
 	if( token != nullptr && token->getType() == JsonTypes::STRING ) {
-//		if( token->getToken() == testString ) {
+		if( token->getToken() == testString ) {
 			result = true;
-//		}
+		}
 	}
 
 	if( token != nullptr ) delete token;

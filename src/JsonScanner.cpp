@@ -98,6 +98,7 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 		switch ( state ) {
 			case ScannerState::STRING:
 				if( c == '\"' ) {
+					token.push_back( c );
 					return new JsonToken( type, token );
 				} else if( c == '\\' ) {
 					state = ScannerState::SP_CHAR;
@@ -191,6 +192,6 @@ bool JsonScanner::isBlankOrNewline( char c ) {
 }
 
 bool JsonScanner::isSpecialChar( char c ) {
-	static std::string characters( "\"\\/\b\f\n\r\t" );
+	static std::string characters( "\"\\/bfnrtu" );
 	return characters.find( c ) != std::string::npos ? true : false;
 }

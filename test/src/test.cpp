@@ -60,7 +60,13 @@ int main( int argc, char ** argv ) {
 
 
 	std::string str = "\"this is my string.\"";
-	printResults( JsonScannerTests::RETURN_STRING_TOKEN, jsonScannerTests.testReturnStringToken( str ), end );
-
+	printResults( JsonScannerTests::RETURN_STRING_TOKEN, jsonScannerTests.testReturnStringToken( str ), false );
+	str = "\"this is my \\t string.\"";
+	printResults( JsonScannerTests::RETURN_STRING_TOKEN, jsonScannerTests.testReturnStringToken( str ), false );
+	str = "\"this is another \\b string \\n of \\\\ mine.\"";
+	printResults( JsonScannerTests::RETURN_STRING_TOKEN, jsonScannerTests.testReturnStringToken( str ), false );
+	str = "\"this should be \\c invalid.\"";
+	printResults( JsonScannerTests::RETURN_STRING_TOKEN, !jsonScannerTests.testReturnStringToken( str ), end );
+	
 	return 0;
 }
