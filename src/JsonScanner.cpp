@@ -21,14 +21,32 @@ JsonToken * JsonScanner::getNextToken() {
 	ScannerState state = ScannerState::START;
 
 	c = m_reader->getNextChar();
+	while ( isBlankOrNewline( c ) ) {
+		c = m_reader->getNextChar();
+	}
+
 	if( c == '\0' ) {
 		return jsonToken;
 	}
 
-	if( c == '{' || c == '}' ) {
+	if( c == '{' ) {
 		token.push_back( c );
-		jsonToken = new JsonToken( JsonTypes::BRACE, token );
-		return jsonToken; 
+		return new JsonToken( JsonTypes::OPEN_BRACE, token );
+	} else if( c == '}' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::CLOSE_BRACE, token );
+	} else if( c == '[' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::OPEN_BRACKET, token );
+	} else if( c == ']' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::CLOSE_BRACKET, token );
+	} else if( c == ',' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::COMMA, token );
+	} else if( c == ':' ) {
+		token.push_back( c );
+		return new JsonToken( JsonTypes::COLON, token );
 	} else if( isdigit( c ) || c == '-' || c == '.' ) {
 		if( c == '.' ) {
 			state = ScannerState::REAL;
@@ -122,8 +140,7 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 	}
 }
 
-JsonToken * JsonScanner::readBooleanToken( std::string & token ) {
-	char c;
+JsonToken * JsonScanner::readBooleanToken( std::string & token ) { char c;
 	char next = token == "t" ? 'r' : 'a';
 	JsonTypes type = JsonTypes::BOOLEAN;
 	ScannerState state = token == "t" ? ScannerState::TRUE : ScannerState::FALSE;
