@@ -11,9 +11,12 @@ enum class JsonTypes : std::int8_t {
 	STRING = 4,
 	ARRAY  = 5,
 	NULLTYPE = 6,
-	BRACE = 7,
-	COMMA = 8,
-	COLON = 9
+	OPEN_BRACE = 7,
+	CLOSE_BRACE = 8,
+	OPEN_BRACKET = 9,
+	CLOSE_BRACKET = 10,
+	COMMA = 11,
+	COLON = 12
 };
 
 #endif
