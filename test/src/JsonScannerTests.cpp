@@ -36,7 +36,8 @@ bool JsonScannerTests::testReturnBraceToken( std::string & testString ) {
 	JsonToken * token = m_scanner->getNextToken();
 
 	bool result = false;
-	if( token != nullptr && token->getType() == JsonTypes::BRACE ) {
+	if( token != nullptr && 
+			( token->getType() == JsonTypes::OPEN_BRACE || token->getType() == JsonTypes::CLOSE_BRACE ) ) {
 		result = true;
 	}
 
