@@ -2,10 +2,12 @@
 #define JSON_SCANNER_TESTS_H
 #include <string>
 #include "JsonScanner.h"
+#include "BaseTests.h"
 
-class JsonScannerTests : private JsonScanner {
+class JsonScannerTests : private JsonScanner, public BaseTests {
 	public:
 		explicit JsonScannerTests( std::string & test );
+		virtual void runTests();
 		bool testIsBlankOrNewline();
 		bool testReturnIntegerToken( std::string & testString );
 		bool testReturnBraceToken( std::string & testString );

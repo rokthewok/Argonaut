@@ -7,6 +7,10 @@ JsonScannerTests::JsonScannerTests( std::string & test )
 
 }
 
+JsonScannerTests::runTests() {
+
+}
+
 bool JsonScannerTests::testIsBlankOrNewline() {
 	if( !this->isBlankOrNewline( ' ' ) ) return false;
 	if( this->isBlankOrNewline( 'c' ) ) return false;
