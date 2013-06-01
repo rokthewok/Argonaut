@@ -2,9 +2,9 @@
 #define  JSONPARSER_H
 #include <string>
 #include <istream>
+#include "JsonScanner.h"
 
 class JsonObject;
-class JsonScanner;
 /*
  * =====================================================================================
  *        Class:  JsonParser
@@ -13,25 +13,12 @@ class JsonScanner;
  */
 class JsonParser {
 	public:
-		/* ====================  LIFECYCLE     ======================================= */
-		JsonParser();                             /* constructor */
+		JsonParser();
 		~JsonParser();
-		/* ====================  ACCESSORS     ======================================= */
-		/* ====================  MUTATORS      ======================================= */
-
-		/* ====================  OPERATORS     ======================================= */
 		JsonObject * parseJson( const std::string & json );
-		JsonObject * parseJson( const std::istream & in );
-	protected:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
+		JsonObject * parseJson( const std::istream & json );
 	private:
-		/* ====================  METHODS       ======================================= */
-		/* ====================  DATA MEMBERS  ======================================= */
-		JsonScanner * m_scanner;
+		JsonObject * parseJson( JsonScanner & scanner );
+};
 
-}; /* -----  end of class JsonParser  ----- */
-
-#endif   /* ----- #ifndef JsonParser_H  ----- */
+#endif   /* ----- #ifndef JSONPARSER_H  ----- */

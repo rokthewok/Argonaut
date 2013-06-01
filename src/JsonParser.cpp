@@ -17,3 +17,30 @@
  */
 
 #include "JsonParser.h"
+#include "JsonObject.h"
+
+JsonParser::JsonParser() {
+
+}
+
+JsonObject * JsonParser::parseJson( std::string & json ) {
+	JsonScanner * scanner = new JsonScanner( json );
+	JsonObject * obj = parseJson( *scanner );
+
+	delete scanner;
+	
+	return obj;
+}
+
+JsonObject * JsonParser::parseJson( std::istream & json ) {
+	JsonScanner * scanner = new JsonScanner( json );
+	JsonObject * obj = parseJson( *scanner );
+
+	delete scanner;
+	
+	return obj;
+}
+
+JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
+
+}
