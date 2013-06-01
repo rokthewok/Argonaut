@@ -11,8 +11,8 @@ test = test/
 
 obj = argonaut.o JsonScanner.o Reader.o JsonToken.o #SyntaxException.o
 binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o #$(bin)SyntaxException.o
-testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o
-testbinobj =  $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o
+testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests.o
+testbinobj =  $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)BaseTests.o
 
 argonaut : $(obj)
 	g++ -o argonaut $(binobj)
@@ -31,6 +31,8 @@ test : $(testobj)
 	g++ -o test_argonaut $(testbinobj)
 test.o : test.cpp JsonScannerTests.o
 	g++ $(TESTCFLAGS) -c $(test)src/test.cpp -o $(bin)test.o
+BaseTests.o : BaseTests.h BaseTests.cpp
+	g++ $(TESTCFLAGS) -c $(test)src/BaseTests.cpp -o $(bin)BaseTests.o
 JsonScannerTests.o : JsonScannerTests.h JsonScannerTests.cpp JsonScanner.o
 	g++ $(TESTCFLAGS) -c $(test)src/JsonScannerTests.cpp -o $(bin)JsonScannerTests.o
 clean :

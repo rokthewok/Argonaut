@@ -15,8 +15,14 @@
  *
  * =====================================================================================
  */
+#include "BaseTests.h"
+#include <iostream>
 
-void printResults( std::string testName, bool result, bool end ) {
+BaseTests::BaseTests() {
+
+}
+
+void BaseTests::printResults( std::string testName, bool result, bool end ) {
 	static unsigned int passed = 0;
 	static unsigned int total = 0;
 
