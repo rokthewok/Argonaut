@@ -19,6 +19,7 @@ class JsonParser {
 		JsonObject * parseJson( const std::istream & json );
 	private:
 		JsonObject * parseJson( JsonScanner & scanner );
+		JsonValue * parseValue( JsonScanner & scanner, JsonToken * token );
 };
 
 #endif   /* ----- #ifndef JSONPARSER_H  ----- */

@@ -18,6 +18,8 @@
 
 #include "JsonParser.h"
 #include "JsonObject.h"
+#include "JsonToken.h"
+#include "JsonTypes.h"
 
 JsonParser::JsonParser() {
 
@@ -42,5 +44,29 @@ JsonObject * JsonParser::parseJson( std::istream & json ) {
 }
 
 JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
+	JsonToken * token = scanner.getNextToken();
 
+
+}
+
+JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token ) {
+	switch( token->getType() ) {
+		case JsonTypes::INTEGER:
+			break;
+		case JsonTypes::REAL:
+			break;
+		case JsonTypes::BOOLEAN:
+			break;
+		case JsonTypes::STRING:
+			break;
+		case JsonTypes::ARRAY:
+			break;
+		case JsonTypes::NULLTYPE:
+			break;
+		case JsonTypes::OPEN_BRACE:
+			break;
+		default:
+			// TODO throw semantic exception here
+			break;
+	}
 }
