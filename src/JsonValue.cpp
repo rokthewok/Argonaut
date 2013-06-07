@@ -1,0 +1,104 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  JsonValue.cpp
+ *
+ *    Description:  
+ *
+ *        Version:  1.0
+ *        Created:  06/07/2013 01:23:12 PM
+ *       Revision:  none
+ *       Compiler:  gcc
+ *
+ *         Author:  YOUR NAME (), 
+ *   Organization:  
+ *
+ * =====================================================================================
+ */
+
+#include "JsonValue.h"
+#include "JsonObject.h"
+
+JsonValue::JsonValue( std::string & val )
+	: m_type( JsonTypes::STRING ),
+	  m_string( val ) {
+
+}
+
+JsonValue::JsonValue( int val )
+	: m_type( JsonTypes::INTEGER ),
+	  m_int( val ) {
+
+}
+
+JsonValue::JsonValue( double val )
+	: m_type( JsonTypes::REAL ),
+	  m_real( val ) {
+		  
+}
+ 
+JsonValue::JsonValue( std::vector<JsonValue *> * val )
+	: m_type( JsonTypes::ARRAY ),
+	  m_array( val ) {
+		  
+}
+
+JsonValue::JsonValue( bool val )
+	: m_type( JsonTypes::BOOLEAN ),
+	  m_boolean( val ) {
+		  
+}
+
+JsonValue::JsonValue( JsonObject * val )
+	: m_type( JsonTypes::OBJECT ),
+	  m_object( val ) {
+		  
+}
+
+std::string JsonValue::getString() const {
+	return m_string;
+}
+
+int JsonValue::getInteger() const {
+	return m_int;
+}
+
+double JsonValue::getReal() const {
+	return m_real;
+}
+
+std::vector<JsonValue *> * JsonValue::getArray() const {
+	return m_array;
+}
+
+bool JsonValue::getBoolean() const {
+	return m_boolean;
+}
+
+JsonObject * JsonValue::getObject() const {
+	return m_object;
+}
+
+bool JsonValue::isString() const {
+	return m_type == JsonTypes::STRING ? true : false;
+}
+
+bool JsonValue::isInteger() const {
+	return m_type == JsonTypes::INTEGER ? true : false;
+}
+
+bool JsonValue::isReal() const {
+	return m_type == JsonTypes::REAL ? true : false;
+}
+
+bool JsonValue::isBoolean() const {
+	return m_type == JsonTypes::BOOLEAN ? true : false;
+}
+
+bool JsonValue::isArray() const {
+	return m_type == JsonTypes::ARRAY ? true : false;
+}
+
+bool JsonValue::isObject() const {
+	return m_type == JsonTypes::OBJECT ? true : false;
+}
