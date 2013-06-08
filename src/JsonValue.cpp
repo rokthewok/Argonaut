@@ -19,39 +19,45 @@
 #include "JsonValue.h"
 #include "JsonObject.h"
 
-JsonValue::JsonValue( std::string & val )
+JsonValue::JsonValue( std::string & name, std::string & val )
 	: m_type( JsonTypes::STRING ),
-	  m_string( val ) {
+	  m_string( val ),
+	  m_name( name ) {
 
 }
 
-JsonValue::JsonValue( int val )
+JsonValue::JsonValue( std::string & name, int val )
 	: m_type( JsonTypes::INTEGER ),
-	  m_int( val ) {
+	  m_int( val ),
+	  m_name( name ) {
 
 }
 
-JsonValue::JsonValue( double val )
+JsonValue::JsonValue( std::string & name, double val )
 	: m_type( JsonTypes::REAL ),
-	  m_real( val ) {
+	  m_real( val ),
+	  m_name( name ) {
 		  
 }
  
-JsonValue::JsonValue( std::vector<JsonValue *> * val )
+JsonValue::JsonValue( std::string & name, std::vector<JsonValue *> * val )
 	: m_type( JsonTypes::ARRAY ),
-	  m_array( val ) {
+	  m_array( val ),
+	  m_name( name ) {
 		  
 }
 
-JsonValue::JsonValue( bool val )
+JsonValue::JsonValue( std::string & name, bool val )
 	: m_type( JsonTypes::BOOLEAN ),
-	  m_boolean( val ) {
+	  m_boolean( val ),
+	  m_name( name ) {
 		  
 }
 
-JsonValue::JsonValue( JsonObject * val )
+JsonValue::JsonValue( std::string & name, JsonObject * val )
 	: m_type( JsonTypes::OBJECT ),
-	  m_object( val ) {
+	  m_object( val ),
+	  m_name( name ) {
 		  
 }
 
