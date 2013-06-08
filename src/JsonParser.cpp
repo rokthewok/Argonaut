@@ -52,6 +52,8 @@ JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
 JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token ) {
 	switch( token->getType() ) {
 		case JsonTypes::INTEGER:
+			int value = atoi( token->getValue().c_str() );
+			return new JsonValue( m_name, value );
 			break;
 		case JsonTypes::REAL:
 			break;

@@ -20,6 +20,8 @@ class JsonParser {
 	private:
 		JsonObject * parseJson( JsonScanner & scanner );
 		JsonValue * parseValue( JsonScanner & scanner, JsonToken * token );
+
+		std::string m_valueName;
 };
 
 #endif   /* ----- #ifndef JSONPARSER_H  ----- */
