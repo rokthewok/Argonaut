@@ -1,6 +1,8 @@
 #ifndef  JSONOBJECT_H
 #define  JSONOBJECT_H
+#include <vector>
 
+class JsonValue;
 /*
  * =====================================================================================
  *        Class:  JsonObject
@@ -9,9 +11,8 @@
  */
 class JsonObject {
 	public:
-		JsonObject();
+		explicit JsonObject( std::vector<JsonValue *> * members );
 		~JsonObject();
-		std::shared_ptr<std::vector<
 	private:
 
 }; /* -----  end of class JsonObject  ----- */
