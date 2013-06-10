@@ -1,6 +1,8 @@
 #ifndef  JSONPARSERTESTS_H
 #define  JSONPARSERTESTS_H
-
+#include <string>
+#include "JsonParser.h"
+#include "BaseTests.h"
 
 /*
  * =====================================================================================
@@ -10,26 +12,14 @@
  */
 class JsonParserTests, public BaseTests, public JsonParser {
 	public:
-		/* ====================  LIFECYCLE     ======================================= */
 		JsonParserTests();                             /* constructor */
-
-		/* ====================  ACCESSORS     ======================================= */
-
-		/* ====================  MUTATORS      ======================================= */
-
-		/* ====================  OPERATORS     ======================================= */
-
-	protected:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
+		virtual void runTests();
 	private:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
+		bool testParseIntegerValue();
+		bool testParsePair( std::string & json );
+		bool testParseArray( std::string & json );
+		bool testParseMembers( std::string & json );
+		bool testParseJson( std::string & json );
 }; /* -----  end of class JsonParserTests  ----- */
-
 
 #endif   /* ----- #ifndef JSONPARSERTESTS_H  ----- */
