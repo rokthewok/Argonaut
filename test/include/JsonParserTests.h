@@ -14,12 +14,21 @@ class JsonParserTests : private JsonParser, public BaseTests {
 	public:
 		JsonParserTests();                             /* constructor */
 		virtual void runTests();
+		
+		static const std::string PARSE_INTEGER_VALUE;
+		static const std::string PARSE_REAL_VALUE;
+		static const std::string PARSE_BOOLEAN_VALUE;
+		static const std::string PARSE_STRING_VALUE;
 	private:
 		bool testParseIntegerValue();
+		bool testParseRealValue();
+		bool testParseBooleanValue();
+		bool testParseStringValue();
 		bool testParsePair( std::string & json );
 		bool testParseArray( std::string & json );
 		bool testParseMembers( std::string & json );
 		bool testParseJson( std::string & json );
+
 }; /* -----  end of class JsonParserTests  ----- */
 
 #endif   /* ----- #ifndef JSONPARSERTESTS_H  ----- */

@@ -24,12 +24,10 @@ JsonParserTests::JsonParserTests() {
 }
 
 void JsonParserTests::runTests() {
-	std::cout << "testParseIntegerValue: "; 
-	if( testParseIntegerValue() ) {
-		std::cout << true << std::endl;
-	} else {
-		std::cout << false << std::endl;
-	}
+	bool end = true;
+
+	printResults( JsonParserTests::PARSE_INTEGER_VALUE, testParseIntegerValue(), false );
+	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -42,6 +40,24 @@ bool JsonParserTests::testParseIntegerValue() {
 	
 	delete token;
 	if( value->isInteger() && value->getInteger() == atoi( json.c_str() ) ) {
+		delete value;
+		return true;
+	} else {
+		delete value;
+		return false;
+	}
+}
+
+bool JsonParserTests::testParseRealValue() {
+	std::string json( "-907.55" );
+	JsonScanner scanner( json );
+	std::string name( "testing_value" );
+	
+	JsonToken * token = scanner.getNextToken();
+	JsonValue * value = this->parseValue( scanner, token, name );
+	
+	delete token;
+	if( value->isReal() && value->getReal() == atof( json.c_str() ) ) {
 		delete value;
 		return true;
 	} else {
@@ -65,3 +81,8 @@ bool JsonParserTests::testParseMembers( std::string & json ) {
 bool JsonParserTests::testParseJson( std::string & json ) {
 	
 }
+
+const std::string JsonParserTests::PARSE_INTEGER_VALUE = "parseIntegerValue";
+const std::string JsonParserTests::PARSE_REAL_VALUE = "parseRealValue";
+const std::string JsonParserTests::PARSE_BOOLEAN_VALUE = "parseBooleanValue";
+const std::string JsonParserTests::PARSE_STRING_VALUE = "parseStringValue";

@@ -27,6 +27,9 @@ int main( int argc, char ** argv ) {
 	JsonParserTests jsonParserTests;
 
 	jsonScannerTests.runTests();
+
+	std::cout << std::endl;
+
 	jsonParserTests.runTests();
 
 	return 0;
