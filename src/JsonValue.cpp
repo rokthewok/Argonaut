@@ -61,6 +61,10 @@ JsonValue::JsonValue( std::string & name, JsonObject * val )
 		  
 }
 
+std::string JsonValue::getName() const {
+	return m_name;
+}
+
 std::string JsonValue::getString() const {
 	return m_string;
 }

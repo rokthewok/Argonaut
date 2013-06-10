@@ -20,6 +20,7 @@ class JsonValue {
 		JsonValue( std::string & name, bool val );
 		JsonValue( std::string & name, JsonObject * val );
 
+		std::string getName() const;
 		std::string getString() const;
 		int getInteger() const;
 		double getReal() const;
@@ -33,9 +34,6 @@ class JsonValue {
 		bool isBoolean() const;
 		bool isArray() const;
 		bool isObject() const;
-		/* ====================  MUTATORS      ======================================= */
-
-		/* ====================  OPERATORS     ======================================= */
 	private:
 		std::string m_name;
 		JsonTypes m_type;

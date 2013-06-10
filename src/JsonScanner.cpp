@@ -62,7 +62,7 @@ JsonToken * JsonScanner::getNextToken() {
 		token.push_back( c );
 		return readBooleanToken( token );
 	} else if( c == '\"' ) {
-		token.push_back( c );
+		//token.push_back( c );
 		return readStringToken( token );
 	} else if( c == 'n' ) {
 		token.push_back( c );
@@ -116,7 +116,7 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 		switch ( state ) {
 			case ScannerState::STRING:
 				if( c == '\"' ) {
-					token.push_back( c );
+					//token.push_back( c );
 					return new JsonToken( type, token );
 				} else if( c == '\\' ) {
 					state = ScannerState::SP_CHAR;

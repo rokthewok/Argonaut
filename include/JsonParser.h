@@ -25,7 +25,6 @@ class JsonParser {
 		JsonValue * parsePair( JsonScanner & scanner );
 		void parseArray( JsonScanner & scanner, std::vector<JsonValue *> * values );
 		JsonValue * parseValue( JsonScanner & scanner, JsonToken * token, std::string & name );
-	private:
 };
 
 #endif   /* ----- #ifndef JSONPARSER_H  ----- */

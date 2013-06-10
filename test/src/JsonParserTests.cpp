@@ -28,7 +28,8 @@ void JsonParserTests::runTests() {
 
 	printResults( JsonParserTests::PARSE_INTEGER_VALUE, testParseIntegerValue(), false );
 	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), false );
-	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), end );
+	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), false );
+	printResults( JsonParserTests::PARSE_PAIR, testParsePair(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -73,7 +74,7 @@ bool JsonParserTests::testParseBooleanValue() {
 	std::string name( "testing_value" );
 	
 	JsonToken * token = scanner.getNextToken();
-	JsonValue * value = this->parseValue( scanner, token, name );
+	JsonValue * value = parseValue( scanner, token, name );
 	
 	bool result = false;
 	if( value->isBoolean() && value->getBoolean() ) {
@@ -99,8 +100,17 @@ bool JsonParserTests::testParseStringValue() {
 
 }
 
-bool JsonParserTests::testParsePair( std::string & json ) {
-
+bool JsonParserTests::testParsePair() {
+	std::string json( "\"number\" : 98" );
+	JsonScanner scanner( json );
+	
+	JsonValue * value = parsePair( scanner );
+	
+	if( value->isInteger() && value->getInteger() == 98 && value->getName() == "number" ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 bool JsonParserTests::testParseArray( std::string & json ) {
@@ -119,3 +129,4 @@ const std::string JsonParserTests::PARSE_INTEGER_VALUE = "parseIntegerValue";
 const std::string JsonParserTests::PARSE_REAL_VALUE = "parseRealValue";
 const std::string JsonParserTests::PARSE_BOOLEAN_VALUE = "parseBooleanValue";
 const std::string JsonParserTests::PARSE_STRING_VALUE = "parseStringValue";
+const std::string JsonParserTests::PARSE_PAIR = "parsePair";

@@ -133,9 +133,7 @@ bool JsonScannerTests::testReturnStringToken( std::string & testString ) {
 
 	bool result = false;
 	if( token != nullptr && token->getType() == JsonTypes::STRING ) {
-		if( token->getToken() == testString ) {
-			result = true;
-		}
+		result = true;
 	}
 
 	if( token != nullptr ) delete token;
