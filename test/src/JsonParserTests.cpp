@@ -27,7 +27,8 @@ void JsonParserTests::runTests() {
 	bool end = true;
 
 	printResults( JsonParserTests::PARSE_INTEGER_VALUE, testParseIntegerValue(), false );
-	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), end );
+	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), false );
+	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -64,6 +65,38 @@ bool JsonParserTests::testParseRealValue() {
 		delete value;
 		return false;
 	}
+}
+
+bool JsonParserTests::testParseBooleanValue() {
+	std::string json( "true" );
+	JsonScanner scanner( json );
+	std::string name( "testing_value" );
+	
+	JsonToken * token = scanner.getNextToken();
+	JsonValue * value = this->parseValue( scanner, token, name );
+	
+	bool result = false;
+	if( value->isBoolean() && value->getBoolean() ) {
+		json = "false";
+		JsonScanner scannerTwo( json );
+		
+		delete token;
+		delete value;
+		token = scannerTwo.getNextToken();
+		value = parseValue( scanner, token, name );
+		if( value->isBoolean() && !value->getBoolean() ) {
+			result = true;
+		}
+	}
+
+	delete token;
+	delete value;
+
+	return result;
+}
+
+bool JsonParserTests::testParseStringValue() {
+
 }
 
 bool JsonParserTests::testParsePair( std::string & json ) {
