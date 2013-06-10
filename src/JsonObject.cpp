@@ -17,3 +17,13 @@
  */
 
 #include "JsonObject.h"
+#include "JsonValue.h"
+
+explicit JsonObject::JsonObject( std::vector<JsonValue *> * members )
+	: m_members( members ) {
+
+}
+
+JsonObject::~JsonObject() {
+	delte m_members;
+}
