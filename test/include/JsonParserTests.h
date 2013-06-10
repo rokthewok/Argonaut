@@ -20,6 +20,7 @@ class JsonParserTests : private JsonParser, public BaseTests {
 		static const std::string PARSE_BOOLEAN_VALUE;
 		static const std::string PARSE_STRING_VALUE;
 		static const std::string PARSE_PAIR;
+		static const std::string PARSE_MEMBERS;
 	private:
 		bool testParseIntegerValue();
 		bool testParseRealValue();
@@ -27,7 +28,7 @@ class JsonParserTests : private JsonParser, public BaseTests {
 		bool testParseStringValue();
 		bool testParsePair();
 		bool testParseArray( std::string & json );
-		bool testParseMembers( std::string & json );
+		bool testParseMembers();
 		bool testParseJson( std::string & json );
 
 }; /* -----  end of class JsonParserTests  ----- */

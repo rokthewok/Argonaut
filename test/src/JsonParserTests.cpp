@@ -29,7 +29,8 @@ void JsonParserTests::runTests() {
 	printResults( JsonParserTests::PARSE_INTEGER_VALUE, testParseIntegerValue(), false );
 	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), false );
 	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), false );
-	printResults( JsonParserTests::PARSE_PAIR, testParsePair(), end );
+	printResults( JsonParserTests::PARSE_PAIR, testParsePair(), false );
+	printResults( JsonParserTests::PARSE_MEMBERS, testParseMembers(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -117,8 +118,32 @@ bool JsonParserTests::testParseArray( std::string & json ) {
 
 }
 
-bool JsonParserTests::testParseMembers( std::string & json ) {
-	
+bool JsonParserTests::testParseMembers() {
+	std::string json( "\"greeting\" : \"Hello world!\" , \"number\" : 93 , \"valid\" : true }" );
+	JsonScanner scanner( json );
+
+	std::vector<JsonValue *> * members = new std::vector<JsonValue *>();
+
+	parseMembers( scanner, members );
+
+	bool greetingFound = false;
+	bool numberFound = false;
+	bool validFound = false;
+	for( auto value : *members ) {
+		if( value->isString() && value->getString() == "Hello world!" && value->getName() == "greeting" ) {
+			greetingFound = true;
+		} else if( value->isInteger() && value->getName() == "number" && value->getInteger() == 93 ) {
+			numberFound = true;
+		} else if( value->isBoolean() && value->getName() == "valid" && value->getBoolean() == true ) { 
+			validFound = true;
+		}
+	}
+
+	if( greetingFound && numberFound && validFound ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 bool JsonParserTests::testParseJson( std::string & json ) {
@@ -130,3 +155,4 @@ const std::string JsonParserTests::PARSE_REAL_VALUE = "parseRealValue";
 const std::string JsonParserTests::PARSE_BOOLEAN_VALUE = "parseBooleanValue";
 const std::string JsonParserTests::PARSE_STRING_VALUE = "parseStringValue";
 const std::string JsonParserTests::PARSE_PAIR = "parsePair";
+const std::string JsonParserTests::PARSE_MEMBERS = "parseMembers";
