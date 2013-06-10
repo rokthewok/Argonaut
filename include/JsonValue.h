@@ -13,7 +13,7 @@ class JsonObject;
  */
 class JsonValue {
 	public:
-		JsonValue( std::string & name, std::string & val );
+		JsonValue( std::string & name, const std::string & val );
 		JsonValue( std::string & name, int val );
 		JsonValue( std::string & name, double val );
 		JsonValue( std::string & name, std::vector<JsonValue *> * val );

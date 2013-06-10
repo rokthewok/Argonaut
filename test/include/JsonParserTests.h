@@ -10,7 +10,7 @@
  *  Description:  
  * =====================================================================================
  */
-class JsonParserTests, public BaseTests, public JsonParser {
+class JsonParserTests : private JsonParser, public BaseTests {
 	public:
 		JsonParserTests();                             /* constructor */
 		virtual void runTests();

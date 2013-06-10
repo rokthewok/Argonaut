@@ -15,6 +15,7 @@
  *
  * =====================================================================================
  */
+#include "JsonParserTests.h"
 #include "JsonValue.h"
 #include "JsonScanner.h"
 
@@ -22,7 +23,7 @@ JsonParserTests::JsonParserTests() {
 
 }
 
-virtual void JsonParserTests::runTests() {
+void JsonParserTests::runTests() {
 	std::cout << "testParseIntegerValue: "; 
 	if( testParseIntegerValue() ) {
 		std::cout << true << std::endl;
@@ -37,7 +38,7 @@ bool JsonParserTests::testParseIntegerValue() {
 	std::string name( "testing_value" );
 	
 	JsonToken * token = scanner.getNextToken();
-	JsonValue * value = scanner.parseValue( scanner, token, name );
+	JsonValue * value = this->parseValue( scanner, token, name );
 	
 	delete token;
 	if( value->isInteger() && value->getInteger() == atoi( json.c_str() ) ) {

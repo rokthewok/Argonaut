@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "JsonScannerTests.h"
+#include "JsonParserTests.h"
 
 void printResults( std::string testName, bool result, bool end ) {
 	static unsigned int passed = 0;
@@ -23,8 +24,10 @@ void printResults( std::string testName, bool result, bool end ) {
 int main( int argc, char ** argv ) {
 	std::string test = "test";
 	JsonScannerTests jsonScannerTests( test );
-	
+	JsonParserTests jsonParserTests;
+
 	jsonScannerTests.runTests();
-		
+	jsonParserTests.runTests();
+
 	return 0;
 }

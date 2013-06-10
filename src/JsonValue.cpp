@@ -19,7 +19,7 @@
 #include "JsonValue.h"
 #include "JsonObject.h"
 
-JsonValue::JsonValue( std::string & name, std::string & val )
+JsonValue::JsonValue( std::string & name, const std::string & val )
 	: m_type( JsonTypes::STRING ),
 	  m_string( val ),
 	  m_name( name ) {

@@ -34,7 +34,7 @@ JsonObject * JsonParser::parseJson( std::string & json ) {
 	return obj;
 }
 
-JsonObject * JsonParser::parseJson( std::istream & json ) {
+JsonObject * JsonParser::parseJson( std::istream * json ) {
 	JsonScanner * scanner = new JsonScanner( json );
 	JsonObject * obj = parseJson( *scanner );
 
@@ -61,7 +61,7 @@ JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
 	}
 }
 
-void parseMembers( JsonScanner & scanner, std::vector<JsonValues *> * members ) {
+void JsonParser::parseMembers( JsonScanner & scanner, std::vector<JsonValue *> * members ) {
 	members->push_back( parsePair( scanner ) );
 
 	JsonToken * token = scanner.getNextToken();
@@ -85,10 +85,10 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 	// 2. grab colon
 	// 3. grab value
 	JsonToken * token = scanner.getNextToken();
-
+	std::string name;
 	switch( token->getType() ) {
 		case JsonTypes::STRING:
-			std::string name = token->getValue();
+			name = token->getToken();
 			delete token;
 			token = scanner.getNextToken();
 			if( token->getType() == JsonTypes::COLON ) {
@@ -107,9 +107,10 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 }
 
 void JsonParser::parseArray( JsonScanner & scanner, std::vector<JsonValue *> * values ) {
+	static std::string name( "" );
 	JsonToken * token = scanner.getNextToken();
-
-	values->push_back( parseValue( scanner, token ) );
+	
+	values->push_back( parseValue( scanner, token, name ) );
 
 	token = scanner.getNextToken();
 	if( token->getType() == JsonTypes::COMMA ) {
@@ -124,24 +125,29 @@ void JsonParser::parseArray( JsonScanner & scanner, std::vector<JsonValue *> * v
 }
 
 JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, std::string & name ) {
+	int iValue;
+	double rValue;
+	bool bValue;
+	std::vector<JsonValue *> * values;
+	
 	switch( token->getType() ) {
 		case JsonTypes::INTEGER:
-			int value = atoi( token->getValue().c_str() );
-			return new JsonValue( name, value );
+			iValue = atoi( token->getToken().c_str() );
+			return new JsonValue( name, iValue );
 			break;
 		case JsonTypes::REAL:
-			double value = atof( token->getValue().c_str() );
-			return new JsonValue( name, value );
+			rValue = atof( token->getToken().c_str() );
+			return new JsonValue( name, rValue );
 			break;
 		case JsonTypes::BOOLEAN:
-			bool value = token->getValue() == "true" ? true : false;
-			return new JsonValue( name, value );
+			bValue = token->getToken() == "true" ? true : false;
+			return new JsonValue( name, bValue );
 			break;
 		case JsonTypes::STRING:
-			return new JsonValue( name, token->getValue() );
+			return new JsonValue( name, token->getToken() );
 			break;
 		case JsonTypes::OPEN_BRACKET:
-			std::vector<JsonValue *> * values = new std::vector<JsonValue *>();
+			values = new std::vector<JsonValue *>();
 			parseArray( scanner, values );
 			break;
 		case JsonTypes::NULLTYPE:
