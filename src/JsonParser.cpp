@@ -57,6 +57,7 @@ JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
 		default:
 			delete token;
 			// TODO throw syntax error
+			return nullptr;
 			break;
 	}
 }

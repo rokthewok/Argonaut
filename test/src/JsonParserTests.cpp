@@ -18,6 +18,7 @@
 #include "JsonParserTests.h"
 #include "JsonValue.h"
 #include "JsonScanner.h"
+#include "JsonObject.h"
 
 JsonParserTests::JsonParserTests() {
 
@@ -30,7 +31,8 @@ void JsonParserTests::runTests() {
 	printResults( JsonParserTests::PARSE_REAL_VALUE, testParseRealValue(), false );
 	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), false );
 	printResults( JsonParserTests::PARSE_PAIR, testParsePair(), false );
-	printResults( JsonParserTests::PARSE_MEMBERS, testParseMembers(), end );
+	printResults( JsonParserTests::PARSE_MEMBERS, testParseMembers(), false );
+	printResults( JsonParserTests::PARSE_JSON, testParseJson(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -39,7 +41,7 @@ bool JsonParserTests::testParseIntegerValue() {
 	std::string name( "testing_value" );
 	
 	JsonToken * token = scanner.getNextToken();
-	JsonValue * value = this->parseValue( scanner, token, name );
+	JsonValue * value = parseValue( scanner, token, name );
 	
 	delete token;
 	if( value->isInteger() && value->getInteger() == atoi( json.c_str() ) ) {
@@ -146,8 +148,39 @@ bool JsonParserTests::testParseMembers() {
 	}
 }
 
-bool JsonParserTests::testParseJson( std::string & json ) {
-	
+bool JsonParserTests::testParseJson() {
+	std::string json( "{ \"name\" : \"John Ruffer\",\n\"age\" : 23, \"height\" : 172.7 , \"vegan\" : false \n}" );
+	JsonScanner scanner( json );
+
+	JsonObject * object = parseJson( scanner );
+
+	const std::vector<JsonValue *> * members = object->getMembers();
+
+	bool nameFound = false;
+	bool ageFound = false;
+	bool heightFound = false;
+	bool veganFound = false;
+	for( auto value : *members ) {
+		if( value->getName() == "name" && value->isString() && value->getString() == "John Ruffer" ) {
+			std::cout << "name found!" << std::endl;
+			nameFound = true;
+		} else if( value->getName() == "age" && value->isInteger() && value->getInteger() == 23 ) {
+			std::cout << "age found!" << std::endl;
+			ageFound = true;
+		} else if( value->getName() == "height" && value->isReal() && value->getReal() == 172.7 ) {
+			std::cout << "height found!" << std::endl;
+			heightFound = true;
+		} else if( value->getName() == "vegan" && value->isBoolean() && value->getBoolean() == false ) {
+			std::cout << "vegan found!" << std::endl;
+			veganFound = true;
+		}
+	}
+
+	if( nameFound && ageFound && heightFound && veganFound ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 const std::string JsonParserTests::PARSE_INTEGER_VALUE = "parseIntegerValue";
@@ -156,3 +189,4 @@ const std::string JsonParserTests::PARSE_BOOLEAN_VALUE = "parseBooleanValue";
 const std::string JsonParserTests::PARSE_STRING_VALUE = "parseStringValue";
 const std::string JsonParserTests::PARSE_PAIR = "parsePair";
 const std::string JsonParserTests::PARSE_MEMBERS = "parseMembers";
+const std::string JsonParserTests::PARSE_JSON = "parseJson";

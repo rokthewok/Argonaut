@@ -76,9 +76,13 @@ JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, st
 	char c;
 	
 	while( true ) {
-		c = m_reader->getNextChar();
+		c = m_reader->peekNextChar();
 
-		if( isBlankOrNewline( c ) || c == '\0' ) return new JsonToken( type, token );
+		if( isBlankOrNewline( c ) || c == '\0' || c == ',' ) {
+			return new JsonToken( type, token );
+		} else {
+			c = m_reader->getNextChar();
+		}
 
 		switch( state ) {
 		case ScannerState::INTEGER:

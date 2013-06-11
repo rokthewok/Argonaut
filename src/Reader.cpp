@@ -20,3 +20,12 @@ char Reader::getNextChar() {
 		return c;
 	}
 }
+
+char Reader::peekNextChar() {
+	char c = m_in->peek();
+	if( c == EOF ) {
+		return '\0';
+	} else {
+		return c;
+	}
+}

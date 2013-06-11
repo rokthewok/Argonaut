@@ -27,3 +27,7 @@ JsonObject::JsonObject( std::vector<JsonValue *> * members )
 JsonObject::~JsonObject() {
 	delete m_members;
 }
+
+const std::vector<JsonValue *> * JsonObject::getMembers() const {
+	return m_members;
+}
