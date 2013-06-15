@@ -15,6 +15,8 @@ testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests
 		  JsonObject.o JsonValue.o JsonParser.o
 testbinobj = $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)BaseTests.o $(bin)JsonParser.o $(bin)JsonParserTests.o $(bin)JsonObject.o $(bin)JsonValue.o
 
+$(shell mkdir bin/)
+
 argonaut : $(obj)
 	g++ -o argonaut $(binobj)
 argonaut.o : argonaut.cpp JsonScanner.o
@@ -33,6 +35,7 @@ JsonValue.o : JsonValue.h JsonValue.cpp
 	g++ $(CFLAGS) -c $(src)JsonValue.cpp -o $(bin)JsonValue.o
 Reader.o : Reader.h Reader.cpp
 	g++ $(CFLAGS) -c $(src)Reader.cpp -o $(bin)Reader.o
+
 test : $(testobj)
 	# TODO build all test classes and main test file
 	g++ -o test_argonaut $(testbinobj)
