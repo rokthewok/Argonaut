@@ -36,6 +36,7 @@ Example usage:
 TODO:
 ----
 
+*	Add proper exception throwing for exceptional states
 *	Make the interface more explicit about memory management (e.g. use unique_ptr / shared_ptr)
 *	Add a JSON writing interface
 *	Provide more robust testing for the entire system
