@@ -151,6 +151,7 @@ JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, st
 		case JsonTypes::OPEN_BRACKET:
 			values = new std::vector<JsonValue *>();
 			parseArray( scanner, values );
+			return new JsonValue( name, values );
 			break;
 		case JsonTypes::NULLTYPE:
 			break;

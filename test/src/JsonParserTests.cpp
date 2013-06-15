@@ -179,7 +179,7 @@ bool JsonParserTests::testParseNestedJson() {
 	bool isValidArray = false;
 	for( auto value : *members ) {
 		if( value->getName() == "links" && value->isArray() ) {
-
+			isValidArray = true;
 		} else if( value->getName() == "person" && value->isObject() ) {
 			JsonObject * object = value->getObject();
 
