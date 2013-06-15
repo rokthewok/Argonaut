@@ -1,10 +1,12 @@
 #ifndef SYNTAX_EXCEPTION_H
 #define SYNTAX_EXCEPTION_H
-#include <exception>
+#include <stdexcept>
+#include <string>
 
-class SyntaxException : public std::exception {
+class SyntaxException : public std::logic_error {
 	public:
-		SyntaxException( char * message ) : m_message( message ) { };
+		SyntaxException()
+					: std::logic_error( "A SyntaxException has occurred in: " ) { };
 		virtual const char *  what() const throw() {
 			return m_message;
 		};

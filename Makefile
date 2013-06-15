@@ -9,7 +9,7 @@ src = src/
 bin = bin/
 test = test/
 
-obj = argonaut.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o #SyntaxException.o
+obj = argonaut.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h #SyntaxException.o
 binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o #$(bin)SyntaxException.o
 testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests.o JsonParserTests.o \
 		  JsonObject.o JsonValue.o JsonParser.o
@@ -18,7 +18,7 @@ testbinobj = $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Rea
 $(shell mkdir bin/)
 
 argonaut : $(obj)
-	g++ -o argonaut $(binobj)
+	g++ -o argonaut $(binobj) $(incl)SyntaxException.h
 argonaut.o : argonaut.cpp JsonScanner.o
 	g++ $(CFLAGS) -c $(src)argonaut.cpp -o $(bin)argonaut.o
 #SyntaxException.o : SyntaxException.h
