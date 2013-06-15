@@ -32,7 +32,8 @@ void JsonParserTests::runTests() {
 	printResults( JsonParserTests::PARSE_BOOLEAN_VALUE, testParseBooleanValue(), false );
 	printResults( JsonParserTests::PARSE_PAIR, testParsePair(), false );
 	printResults( JsonParserTests::PARSE_MEMBERS, testParseMembers(), false );
-	printResults( JsonParserTests::PARSE_JSON, testParseJson(), end );
+	printResults( JsonParserTests::PARSE_JSON, testParseJson(), false );
+	printResults( JsonParserTests::PARSE_NESTED_JSON, testParseNestedJson(), end );
 }
 
 bool JsonParserTests::testParseIntegerValue() {
@@ -110,8 +111,10 @@ bool JsonParserTests::testParsePair() {
 	JsonValue * value = parsePair( scanner );
 	
 	if( value->isInteger() && value->getInteger() == 98 && value->getName() == "number" ) {
+		delete value;
 		return true;
 	} else {
+		delete value;
 		return false;
 	}
 }
@@ -141,6 +144,8 @@ bool JsonParserTests::testParseMembers() {
 		}
 	}
 
+	delete members;
+
 	if( greetingFound && numberFound && validFound ) {
 		return true;
 	} else {
@@ -153,6 +158,41 @@ bool JsonParserTests::testParseJson() {
 	JsonScanner scanner( json );
 
 	JsonObject * object = parseJson( scanner );
+
+	bool result = checkValidPerson( object );
+
+	delete object;
+
+	return result;
+}
+
+bool JsonParserTests::testParseNestedJson() {
+	std::string json( "{ \"links\" : [ \"http://eightbitheart.blogspot.com/\",\"http://eightbitheart.tumblr.com/\" ] ,"
+						" \"person\" : { \"name\" : \"John Ruffer\",\n\"age\" : 23, \"height\" : 172.7 , \"vegan\" : false \n} }" );
+	JsonScanner scanner( json );
+
+	JsonObject * object = parseJson( scanner );
+
+	auto members = object->getMembers();
+
+	bool isValidPerson = false;
+	bool isValidArray = false;
+	for( auto value : *members ) {
+		if( value->getName() == "links" && value->isArray() ) {
+
+		} else if( value->getName() == "person" && value->isObject() ) {
+			JsonObject * object = value->getObject();
+
+			isValidPerson = checkValidPerson( object );
+		}
+	}
+
+	delete object;
+
+	return isValidPerson && isValidArray;
+}
+
+bool JsonParserTests::checkValidPerson( JsonObject * object ) {
 
 	const std::vector<JsonValue *> * members = object->getMembers();
 
@@ -175,7 +215,7 @@ bool JsonParserTests::testParseJson() {
 			veganFound = true;
 		}
 	}
-
+	
 	if( nameFound && ageFound && heightFound && veganFound ) {
 		return true;
 	} else {
@@ -190,3 +230,4 @@ const std::string JsonParserTests::PARSE_STRING_VALUE = "parseStringValue";
 const std::string JsonParserTests::PARSE_PAIR = "parsePair";
 const std::string JsonParserTests::PARSE_MEMBERS = "parseMembers";
 const std::string JsonParserTests::PARSE_JSON = "parseJson";
+const std::string JsonParserTests::PARSE_NESTED_JSON = "parseNestedJson";

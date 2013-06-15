@@ -130,7 +130,8 @@ JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, st
 	double rValue;
 	bool bValue;
 	std::vector<JsonValue *> * values;
-	
+	std::vector<JsonValue *> * members;
+
 	switch( token->getType() ) {
 		case JsonTypes::INTEGER:
 			iValue = atoi( token->getToken().c_str() );
@@ -154,6 +155,9 @@ JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, st
 		case JsonTypes::NULLTYPE:
 			break;
 		case JsonTypes::OPEN_BRACE:
+			members = new std::vector<JsonValue *>();
+			parseMembers( scanner, members );
+			return new JsonValue( name, new JsonObject( members ) );
 			break;
 		default:
 			// TODO throw semantic exception here

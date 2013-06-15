@@ -3,6 +3,7 @@
 #include <string>
 #include "JsonParser.h"
 #include "BaseTests.h"
+#include "JsonObject.h"
 
 /*
  * =====================================================================================
@@ -22,6 +23,7 @@ class JsonParserTests : private JsonParser, public BaseTests {
 		static const std::string PARSE_PAIR;
 		static const std::string PARSE_MEMBERS;
 		static const std::string PARSE_JSON;
+		static const std::string PARSE_NESTED_JSON;
 	private:
 		bool testParseIntegerValue();
 		bool testParseRealValue();
@@ -31,7 +33,9 @@ class JsonParserTests : private JsonParser, public BaseTests {
 		bool testParseArray( std::string & json );
 		bool testParseMembers();
 		bool testParseJson();
+		bool testParseNestedJson();
 
+		bool checkValidPerson( JsonObject * object );
 }; /* -----  end of class JsonParserTests  ----- */
 
 #endif   /* ----- #ifndef JSONPARSERTESTS_H  ----- */
