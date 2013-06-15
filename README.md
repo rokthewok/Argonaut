@@ -42,3 +42,4 @@ TODO:
 *	Provide more robust testing for the entire system
 *	Create DLL's
 *	Add better documentation for the client
+*	Create an interactive "shell" to test the framework
