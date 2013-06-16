@@ -5,14 +5,14 @@
 
 class SyntaxException : public std::logic_error {
 	public:
-		SyntaxException()
-					: std::logic_error( "A SyntaxException has occurred in: " ) { };
+		SyntaxException( const char * method )
+					: std::logic_error( method ), m_message( method ) { };
 		virtual const char *  what() const throw() {
 			return m_message;
 		};
 
 	private:
-		char * m_message;
+		const char * m_message;
 };
 
 #endif
