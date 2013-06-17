@@ -69,7 +69,7 @@ void Argonaut::runInteractiveShell() const {
 	std::string input;
 	JsonObject * object;
 	while( true ) {
-		std::cout << "> ";
+		std::cout << "argonaut> ";
 		std::getline( std::cin, input );
 
 		if( input == "q" ) break;
