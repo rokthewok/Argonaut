@@ -18,25 +18,25 @@
 #include "BaseTests.h"
 #include <iostream>
 
-BaseTests::BaseTests() {
+BaseTests::BaseTests()
+	: m_passed( 0 ),
+	  m_total( 0 ) {
 
 }
 
 void BaseTests::printResults( std::string testName, bool result, bool end ) {
-	static unsigned int passed = 0;
-	static unsigned int total = 0;
-
+	
 	if( result ) {
 		std::cout << testName << ": pass" << std::endl;
-		passed++;
+		m_passed++;
 	} else {
 		std::cout << testName << ": fail" << std::endl;
 	}
 
-	total++;
+	m_total++;
 
 	if( end ) {
-		std::cout << passed << " of " << total << " tests passed." << std::endl;
+		std::cout << m_passed << " of " << m_total << " tests passed." << std::endl;
 	}
 }
 

@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
+#include <stdexcept>
 #include "JsonScannerTests.h"
-#include "SyntaxException.h"
 
 JsonScannerTests::JsonScannerTests( std::string & test ) 
 	: JsonScanner( test ) {
@@ -77,7 +77,8 @@ bool JsonScannerTests::testReturnIntegerToken( std::string & testString ) {
 	
 	try {
 		token = m_scanner->getNextToken();
-	} catch ( SyntaxException & e ) {
+	} catch ( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
 
@@ -99,7 +100,8 @@ bool JsonScannerTests::testReturnBraceToken( std::string & testString ) {
 
 	try {
 		token = m_scanner->getNextToken();
-	} catch ( SyntaxException & e ) {
+	} catch ( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
 
@@ -122,7 +124,8 @@ bool JsonScannerTests::testReturnBooleanToken( std::string & testString ) {
 
 	try {
 		token = m_scanner->getNextToken();
-	} catch ( SyntaxException & e ) {
+	} catch ( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
 
@@ -144,7 +147,8 @@ bool JsonScannerTests::testReturnNullToken( std::string & testString ) {
 
 	try {
 		token = m_scanner->getNextToken();
-	} catch ( SyntaxException & e ) {
+	} catch ( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
 	
@@ -166,7 +170,8 @@ bool JsonScannerTests::testReturnStringToken( std::string & testString ) {
 
 	try {
 		token = m_scanner->getNextToken();
-	} catch ( SyntaxException & e ) {
+	} catch ( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		return false;
 	}
 
@@ -188,7 +193,8 @@ bool JsonScannerTests::testThrowSyntaxException() {
 
 	try {
 		token = m_scanner->getNextToken();
-	} catch( SyntaxException & e ) {
+	} catch( std::exception & e ) {
+		std::cout << e.what() << std::endl;
 		exceptionThrown = true;
 	}
 	

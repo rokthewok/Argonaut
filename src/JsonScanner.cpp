@@ -3,6 +3,10 @@
 #include "JsonTypes.h"
 #include "JsonToken.h"
 #include "SyntaxException.h"
+#include "NumberFormatException.h"
+#include "BooleanFormatException.h"
+#include "NullFormatException.h"
+#include "StringFormatException.h"
 
 JsonScanner::JsonScanner( std::istream * in )
 	: m_reader( new Reader( in ) ) {
@@ -59,32 +63,31 @@ JsonToken * JsonScanner::getNextToken() {
 		token.push_back( c );
 		try {	
 			return readNumberToken( state, type, token );
-		} catch( SyntaxException e ) {
+		} catch( NumberFormatException e ) {
 			throw e;
 		}
 	} else if( c == 't' || c == 'f' ) {
 		token.push_back( c );
 		try {	
 			return readBooleanToken( token );
-		} catch( SyntaxException e ) {
+		} catch( BooleanFormatException e ) {
 			throw e;
 		}
 	} else if( c == '\"' ) {
 		try {	
 			return readStringToken( token );
-		} catch( SyntaxException e ) {
+		} catch( StringFormatException e ) {
 			throw e;
 		}
 	} else if( c == 'n' ) {
 		token.push_back( c );
 		try {	
 			return readNullToken( token );
-		} catch( SyntaxException e ) {
+		} catch( NullFormatException e ) {
 			throw e;
 		}
 	} else {
-		//return jsonToken;
-		throw SyntaxException( "Scanner." );
+		throw SyntaxException( "error in JsonScanner" );
 	}
 }
 
@@ -110,7 +113,7 @@ JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, st
 				token.push_back( c );
 			} else {
 				// TODO throw syntax error here
-				throw SyntaxException( "Scanner.readNumberToken." );
+				throw NumberFormatException();
 				//return nullptr;
 			}
 			break;
@@ -119,12 +122,12 @@ JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, st
 				token.push_back( c );
 			} else {
 				// TODO throw syntax error here
-				throw SyntaxException( "Scanner.readNumberToken." );
+				throw NumberFormatException();
 				//return nullptr;
 			}
 			break;
 		default:
-			throw SyntaxException( "Scanner.readNumberToken." );
+			throw NumberFormatException();
 			//return nullptr;
 		};
 	}
@@ -152,12 +155,12 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 					token.push_back( c );
 					state = ScannerState::STRING;
 				} else {
-					throw SyntaxException( "Scanner.readNumberToken." );
+					throw StringFormatException();
 					//return nullptr;
 				}
 				break;
 			default:
-				throw SyntaxException( "Scanner.readNumberToken." );
+				throw StringFormatException();
 				//return nullptr;
 				break;
 		}
@@ -180,7 +183,7 @@ JsonToken * JsonScanner::readBooleanToken( std::string & token ) { char c;
 					else if( next == 'u' ) next = 'e';
 					else return new JsonToken( type, token );
 				} else {
-					throw SyntaxException( "Scanner.readNumberToken." );
+					throw BooleanFormatException();
 					//return nullptr;
 				}
 				break;
@@ -192,12 +195,12 @@ JsonToken * JsonScanner::readBooleanToken( std::string & token ) { char c;
 					else if( next == 's' ) next = 'e';
 					else return new JsonToken( type, token );
 				} else {
-					throw SyntaxException( "Scanner.readNumberToken." );
+					throw BooleanFormatException();
 					//return nullptr;
 				}
 				break;
 			default:
-				throw SyntaxException( "Scanner.readNumberToken." );
+				throw BooleanFormatException();
 				//return nullptr;
 				break;
 		}
@@ -216,7 +219,7 @@ JsonToken * JsonScanner::readNullToken( std::string & token ) {
 			if( next == 'u' ) next = 'l';
 			else if( next == 'l' ) break;
 		} else {
-			throw SyntaxException( "Scanner.readNumberToken." );
+			throw NullFormatException();
 			//return nullptr;
 		}
 	}
@@ -227,7 +230,7 @@ JsonToken * JsonScanner::readNullToken( std::string & token ) {
 		token.push_back( c );
 		return new JsonToken( JsonTypes::NULLTYPE, token );
 	} else {
-		throw SyntaxException( "Scanner.readNumberToken." );
+		throw NullFormatException();
 		//return nullptr;
 	}
 }

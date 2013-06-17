@@ -9,8 +9,9 @@ src = src/
 bin = bin/
 test = test/
 
-obj = argonaut.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h #SyntaxException.o
-binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o #$(bin)SyntaxException.o
+obj = argonaut.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h \
+		BooleanFormatException.h NumberFormatException.h NullFormatException.h StringFormatException.h
+binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o
 testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests.o JsonParserTests.o \
 		  JsonObject.o JsonValue.o JsonParser.o
 testbinobj = $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)BaseTests.o $(bin)JsonParser.o $(bin)JsonParserTests.o $(bin)JsonObject.o $(bin)JsonValue.o

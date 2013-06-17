@@ -14,10 +14,8 @@ class BaseTests {
 		void printResults( std::string testName, bool result, bool end );
 		virtual void runTests() = 0;
 	private:
-		/* ====================  METHODS       ======================================= */
-
-		/* ====================  DATA MEMBERS  ======================================= */
-
+		int m_passed;
+		int m_total;
 };
 
 #endif   /* ----- #ifndef BASETESTS_H  ----- */
