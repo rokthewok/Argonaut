@@ -1,7 +1,17 @@
 Argonaut - a JSON parser in C++
 ===============================
 
-Example usage:
+*Compiling:*
+Compile by calling `make` in the top level directory of the project. Calling `make test` will create the test executable for the project. Calling `make clean` will clear the compiled binaries and output files.
+
+To execute the program, call:
+
+	./argonaut [-idh]
+		-i	interactive shell; enter json strings and see the output. 'q' quits.
+		-d	run the demo (example usage) script. The code is listed below.
+		-h	help.
+
+Example usage code:
 
 	std::string json( "{ \"name\" : \"Malcolm Reynolds\" , \"vehicle\" : \"Firefly\" , \"age\" : 31 , \"wanted\" : true }" );
 
@@ -37,8 +47,6 @@ TODO:
 ----
 
 *	Make the interface more explicit about memory management (e.g. use unique_ptr / shared_ptr)
-*	Add a JSON writing interface (?)
 *	Provide more robust testing for the entire system
 *	Create DLL's
 *	Add better documentation for the client
-*	Create an interactive "shell" to test the framework
