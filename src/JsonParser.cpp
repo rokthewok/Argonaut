@@ -20,6 +20,11 @@
 #include "JsonObject.h"
 #include "JsonToken.h"
 #include "JsonTypes.h"
+#include "ValueParsingException.h"
+#include "PairParsingException.h"
+#include "ArrayParsingException.h"
+#include "MemberParsingException.h"
+#include "JsonParsingException.h"
 
 JsonParser::JsonParser() {
 
@@ -27,7 +32,15 @@ JsonParser::JsonParser() {
 
 JsonObject * JsonParser::parseJson( std::string & json ) {
 	JsonScanner * scanner = new JsonScanner( json );
-	JsonObject * obj = parseJson( *scanner );
+	JsonObject * obj;
+	try {
+ 		obj = parseJson( *scanner );
+	}
+	catch ( const std::exception & e ) {
+		delete scanner;
+		throw e;
+	}
+
 
 	delete scanner;
 	
@@ -36,47 +49,87 @@ JsonObject * JsonParser::parseJson( std::string & json ) {
 
 JsonObject * JsonParser::parseJson( std::istream * json ) {
 	JsonScanner * scanner = new JsonScanner( json );
-	JsonObject * obj = parseJson( *scanner );
-
+	JsonObject * obj;
+	try {
+ 		obj = parseJson( *scanner );
+	}
+	catch ( const std::exception & e ) {
+		delete scanner;
+		throw e;
+	}
+	
 	delete scanner;
 	
 	return obj;
 }
 
 JsonObject * JsonParser::parseJson( JsonScanner & scanner ) {
-	JsonToken * token = scanner.getNextToken();
+	JsonToken * token;
+	try {
+		token = scanner.getNextToken();
+	}
+	catch ( const std::exception & e ) {
+		throw e;
+	}
 
 	std::vector<JsonValue *> * members = new std::vector<JsonValue *>();
 
 	switch( token->getType() ) {
 		case JsonTypes::OPEN_BRACE:
 			delete token;
-			parseMembers( scanner, members );
+			try {
+				parseMembers( scanner, members );
+			}
+			catch ( const std::exception & e ) {
+				delete members;
+				throw e;
+			}
 			return new JsonObject( members );
 			break;
 		default:
 			delete token;
-			// TODO throw syntax error
-			return nullptr;
+			delete members;
+			throw JsonParsingException();
 			break;
 	}
 }
 
 void JsonParser::parseMembers( JsonScanner & scanner, std::vector<JsonValue *> * members ) {
-	members->push_back( parsePair( scanner ) );
+	JsonValue * value;
 
-	JsonToken * token = scanner.getNextToken();
+	try {
+		value = parsePair( scanner );
+	}
+	catch ( const std::exception & e ) {
+		throw e;
+	}
+
+	members->push_back( value );
+
+	JsonToken * token;
+	try {
+ 		token = scanner.getNextToken();
+	}
+	catch ( const std::exception & e ) {
+		throw e;
+	}
+
 	switch( token->getType() ) {
 		case JsonTypes::COMMA:
 			delete token;
-			parseMembers( scanner, members );
+			try {
+				parseMembers( scanner, members );
+			}
+			catch ( const std::exception & e ) {
+				throw e;
+			}
 			break;
 		case JsonTypes::CLOSE_BRACE:
 			delete token;
 			return;
 		default:
 			delete token;
-			// TODO throw syntax error
+			throw MemberParsingException();
 			break;
 	}
 }
@@ -85,8 +138,16 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 	// 1. grab name
 	// 2. grab colon
 	// 3. grab value
-	JsonToken * token = scanner.getNextToken();
+	JsonToken * token;
+	try {
+		token = scanner.getNextToken();
+	}
+	catch ( const std::exception & e ) {
+		throw e;
+	}
+
 	std::string name;
+	JsonValue * value;
 	switch( token->getType() ) {
 		case JsonTypes::STRING:
 			name = token->getToken();
@@ -95,33 +156,55 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 			if( token->getType() == JsonTypes::COLON ) {
 				delete token;
 				token = scanner.getNextToken();
-				return parseValue( scanner, token, name );
+				try {
+					value = parseValue( scanner, token, name );
+				}
+				catch ( const std::exception & e ) {
+					throw e;
+				}
+				return value;
 			} else {
 				delete token;
-				// TODO throw syntax error
+				throw PairParsingException();
 			}
 			break;
 		default:
-			// TODO throw syntax error
+			throw PairParsingException();
 			break;
 	}
 }
 
 void JsonParser::parseArray( JsonScanner & scanner, std::vector<JsonValue *> * values ) {
 	static std::string name( "" );
-	JsonToken * token = scanner.getNextToken();
-	
-	values->push_back( parseValue( scanner, token, name ) );
+	JsonToken * token;
+	try {
+		token = scanner.getNextToken();
+	}
+	catch ( const std::exception & e ) {
+		throw e;
+	}
+
+	JsonValue * value;
+	try {
+		value = parseValue( scanner, token, name );
+	} catch( const std::exception & e ) {
+		throw e;
+	}
+	values->push_back( value );
 
 	token = scanner.getNextToken();
 	if( token->getType() == JsonTypes::COMMA ) {
 		delete token;
-		parseArray( scanner, values );
+		try {
+			parseArray( scanner, values );
+		} catch( std::exception & e ) {
+			throw e;
+		}
 	} else if ( token->getType() == JsonTypes::CLOSE_BRACKET ) {
 		delete token;
 	} else {
 		delete token;
-		// TODO throw syntax error
+		throw ArrayParsingException();
 	}
 }
 
@@ -150,18 +233,28 @@ JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, st
 			break;
 		case JsonTypes::OPEN_BRACKET:
 			values = new std::vector<JsonValue *>();
-			parseArray( scanner, values );
+			try {
+				parseArray( scanner, values );
+			} catch( const std::exception & e ) {
+				delete values;
+				throw e;
+			}
 			return new JsonValue( name, values );
 			break;
 		case JsonTypes::NULLTYPE:
 			break;
 		case JsonTypes::OPEN_BRACE:
 			members = new std::vector<JsonValue *>();
-			parseMembers( scanner, members );
+			try {
+				parseMembers( scanner, members );
+			} catch( const std::exception & e ) {
+				delete members;
+				throw e;
+			}
 			return new JsonValue( name, new JsonObject( members ) );
 			break;
 		default:
-			// TODO throw semantic exception here
+			throw ValueParsingException();
 			break;
 	}
 }
