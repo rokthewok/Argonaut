@@ -1,7 +1,6 @@
 #ifndef SYNTAX_EXCEPTION_H
 #define SYNTAX_EXCEPTION_H
 #include <stdexcept>
-#include <string>
 
 class SyntaxException : public std::logic_error {
 	public:
