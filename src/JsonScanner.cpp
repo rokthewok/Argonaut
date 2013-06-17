@@ -64,27 +64,27 @@ JsonToken * JsonScanner::getNextToken() {
 		try {	
 			return readNumberToken( state, type, token );
 		} catch( NumberFormatException e ) {
-			throw e;
+			throw;
 		}
 	} else if( c == 't' || c == 'f' ) {
 		token.push_back( c );
 		try {	
 			return readBooleanToken( token );
 		} catch( BooleanFormatException e ) {
-			throw e;
+			throw;
 		}
 	} else if( c == '\"' ) {
 		try {	
 			return readStringToken( token );
 		} catch( StringFormatException e ) {
-			throw e;
+			throw;
 		}
 	} else if( c == 'n' ) {
 		token.push_back( c );
 		try {	
 			return readNullToken( token );
 		} catch( NullFormatException e ) {
-			throw e;
+			throw;
 		}
 	} else {
 		throw SyntaxException( "error in JsonScanner" );

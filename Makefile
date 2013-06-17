@@ -50,4 +50,4 @@ JsonParserTests.o : JsonParserTests.h JsonParserTests.cpp JsonParser.o BaseTests
 JsonScannerTests.o : JsonScannerTests.h JsonScannerTests.cpp JsonScanner.o BaseTests.o
 	g++ $(TESTCFLAGS) -c $(test)src/JsonScannerTests.cpp -o $(bin)JsonScannerTests.o
 clean :
-	rm -f bin/*.o argonaut test_argonaut
+	rm -rf bin/ argonaut test_argonaut
