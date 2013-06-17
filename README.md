@@ -1,7 +1,7 @@
 Argonaut - a JSON parser in C++
 ===============================
 
-*Compiling:*
+**Compiling:**
 Compile by calling `make` in the top level directory of the project. Calling `make test` will create the test executable for the project. Calling `make clean` will clear the compiled binaries and output files.
 
 To execute the program, call:
