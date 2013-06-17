@@ -9,10 +9,10 @@ src = src/
 bin = bin/
 test = test/
 
-obj = argonaut.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h \
+obj = main.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h \
 		BooleanFormatException.h NumberFormatException.h NullFormatException.h StringFormatException.h \
-		ValueParsingException.h PairParsingException.h ArrayParsingException.h MemberParsingException.h JsonParsingException.h
-binobj = $(bin)argonaut.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o
+		ValueParsingException.h PairParsingException.h ArrayParsingException.h MemberParsingException.h JsonParsingException.h Argonaut.o
+binobj = $(bin)main.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o $(bin)Argonaut.o
 testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests.o JsonParserTests.o \
 		  JsonObject.o JsonValue.o JsonParser.o
 testbinobj = $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)BaseTests.o $(bin)JsonParser.o $(bin)JsonParserTests.o $(bin)JsonObject.o $(bin)JsonValue.o
@@ -21,8 +21,10 @@ $(shell mkdir bin/)
 
 argonaut : $(obj)
 	g++ -o argonaut $(binobj) $(incl)SyntaxException.h
-argonaut.o : argonaut.cpp JsonScanner.o
-	g++ $(CFLAGS) -c $(src)argonaut.cpp -o $(bin)argonaut.o
+main.o : main.cpp Argonaut.o
+	g++ $(CFLAGS) -c $(src)main.cpp -o $(bin)main.o
+Argonaut.o : Argonaut.h Argonaut.cpp JsonParser.o
+	g++ $(CFLAGS) -c $(src)Argonaut.cpp -o $(bin)Argonaut.o
 JsonParser.o : JsonParser.h JsonParser.cpp JsonScanner.o
 	g++ $(CFLAGS) -c $(src)JsonParser.cpp -o $(bin)JsonParser.o
 JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h JsonToken.h JsonToken.o 
