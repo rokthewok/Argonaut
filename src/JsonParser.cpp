@@ -157,9 +157,20 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 			name = token->getToken();
 			delete token;
 			token = scanner.getNextToken();
+			if( token == nullptr ) {
+				throw PairParsingException();
+			}
 			if( token->getType() == JsonTypes::COLON ) {
 				delete token;
-				token = scanner.getNextToken();
+				try {
+					token = scanner.getNextToken();
+				} catch( const std::exception & e ) {
+					throw;
+				}
+				if( token == nullptr ) {
+					throw PairParsingException();
+				}
+
 				try {
 					value = parseValue( scanner, token, name );
 				}
