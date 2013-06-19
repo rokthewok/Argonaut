@@ -12,23 +12,14 @@
  */
 class JsonToken {
 public:
-	/* ====================  LIFECYCLE     ======================================= */
-	JsonToken( JsonTypes type, std::string & token );                             /* constructor */
-
-	/* ====================  ACCESSORS     ======================================= */
+	JsonToken( JsonTypes type, std::string & token );
 	JsonTypes getType() const;
 	const std::string & getToken() const;
-	/* ====================  MUTATORS      ======================================= */
-	/* ====================  OPERATORS     ======================================= */
-
 private:
-	/* ====================  METHODS       ======================================= */
-
-	/* ====================  DATA MEMBERS  ======================================= */
 	JsonTypes m_type;
 	std::string m_token;
 
-}; /* -----  end of class JsonToken  ----- */
+};
 
 
 #endif // JSON_TOKEN_H

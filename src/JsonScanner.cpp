@@ -31,7 +31,7 @@ JsonToken * JsonScanner::getNextToken() {
 	}
 
 	if( c == '\0' ) {
-		return jsonToken;
+		return new JsonToken( JsonTypes::END_OF_STREAM, token );
 	}
 
 	if( c == '{' ) {

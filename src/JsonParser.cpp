@@ -157,18 +157,13 @@ JsonValue * JsonParser::parsePair( JsonScanner & scanner ) {
 			name = token->getToken();
 			delete token;
 			token = scanner.getNextToken();
-			if( token == nullptr ) {
-				throw PairParsingException();
-			}
+
 			if( token->getType() == JsonTypes::COLON ) {
 				delete token;
 				try {
 					token = scanner.getNextToken();
 				} catch( const std::exception & e ) {
 					throw;
-				}
-				if( token == nullptr ) {
-					throw PairParsingException();
 				}
 
 				try {
@@ -206,8 +201,11 @@ void JsonParser::parseArray( JsonScanner & scanner, std::vector<JsonValue *> * v
 		throw;
 	}
 	values->push_back( value );
-
-	token = scanner.getNextToken();
+	try {
+		token = scanner.getNextToken();
+	} catch( const std::exception & e ) {
+		throw;
+	}
 	if( token->getType() == JsonTypes::COMMA ) {
 		delete token;
 		try {
