@@ -6,6 +6,7 @@
 #include "JsonScanner.h"
 #include "JsonValue.h"
 
+namespace Argonaut {
 class JsonObject;
 class JsonToken;
 /*
@@ -26,5 +27,6 @@ class JsonParser {
 		void parseArray( JsonScanner & scanner, std::vector<JsonValue *> * values );
 		JsonValue * parseValue( JsonScanner & scanner, JsonToken * token, std::string & name );
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef JSONPARSER_H  ----- */

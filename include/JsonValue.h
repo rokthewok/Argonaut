@@ -4,6 +4,7 @@
 #include <vector>
 #include "JsonTypes.h"
 
+namespace Argonaut {
 class JsonObject;
 /*
  * =====================================================================================
@@ -44,5 +45,6 @@ class JsonValue {
 		bool m_boolean;
 		JsonObject * m_object;
 }; /* -----  end of class JsonValue  ----- */
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef JsonValue_INC  ----- */

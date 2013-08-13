@@ -2,6 +2,7 @@
 #define  STRINGFORMATEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class StringFormatException : public std::logic_error {
 	public:
 		StringFormatException()
@@ -13,5 +14,6 @@ class StringFormatException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef STRINGFORMATEXCEPTION_H  ----- */

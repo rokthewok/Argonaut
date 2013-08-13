@@ -26,6 +26,7 @@
 #include "MemberParsingException.h"
 #include "JsonParsingException.h"
 
+namespace Argonaut {
 JsonParser::JsonParser() {
 
 }
@@ -271,3 +272,4 @@ JsonValue * JsonParser::parseValue( JsonScanner & scanner, JsonToken * token, st
 			break;
 	}
 }
+} // namespace Argonaut

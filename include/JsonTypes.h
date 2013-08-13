@@ -3,6 +3,7 @@
 #include <cstdint>
 
 // this may be temporary
+namespace Argonaut {
 enum class JsonTypes : std::int8_t {
 	OBJECT = 0,
 	INTEGER = 1,
@@ -19,5 +20,6 @@ enum class JsonTypes : std::int8_t {
 	COLON = 12,
 	END_OF_STREAM = 13
 };
+} // namespace Argonaut
 
 #endif

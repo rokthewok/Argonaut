@@ -2,6 +2,7 @@
 #define  NullFORMATEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class NullFormatException : public std::logic_error {
 	public:
 		NullFormatException()
@@ -13,5 +14,6 @@ class NullFormatException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef NULLFORMATEXCEPTION_H  ----- */

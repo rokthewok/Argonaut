@@ -2,6 +2,7 @@
 #define  VALUEPARSINGEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class ValueParsingException : public std::logic_error {
 	public:
 		ValueParsingException()
@@ -13,5 +14,6 @@ class ValueParsingException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef VALUEPARSINGEXCEPTION_H  ----- */

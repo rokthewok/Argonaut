@@ -6,6 +6,7 @@
 #include "Reader.h"
 #include "JsonToken.h"
 
+namespace Argonaut {
 class JsonScanner {
 	public:
 		JsonScanner( std::istream * in );
@@ -34,5 +35,6 @@ class JsonScanner {
 		JsonToken * readNullToken( std::string & token );
 		Reader * m_reader;
 };
+} // namespace Argonaut
 
 #endif

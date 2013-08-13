@@ -23,6 +23,7 @@
 #include "JsonValue.h"
 #include "Argonaut.h"
 
+namespace Argonaut {
 Argonaut::Argonaut() {
 
 }
@@ -154,3 +155,4 @@ void Argonaut::printParsedJson( JsonObject * object, std::string indent ) const 
 		}
 	}
 }
+} // namespace Argonaut

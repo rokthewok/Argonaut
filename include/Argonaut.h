@@ -10,6 +10,7 @@
  *  Description:  
  * =====================================================================================
  */
+namespace Argonaut {
 class Argonaut
 {
 	public:
@@ -22,5 +23,5 @@ class Argonaut
 		void printArray( std::vector<JsonValue *> * values ) const;
 
 }; /* -----  end of class Argonaut  ----- */
-
+} // namespace Argonaut
 #endif   /* ----- #ifndef ARGONAUT_H  ----- */

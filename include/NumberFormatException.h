@@ -2,6 +2,7 @@
 #define  NUMBERFORMATEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class NumberFormatException : public std::logic_error {
 	public:
 		NumberFormatException()
@@ -13,5 +14,6 @@ class NumberFormatException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef NUMBERFORMATEXCEPTION_H  ----- */

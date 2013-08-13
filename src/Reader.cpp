@@ -2,6 +2,7 @@
 #include <string>
 #include "Reader.h"
 
+namespace Argonaut {
 Reader::Reader( std::string & str )
 	: m_in( new std::stringstream( str, std::stringstream::in ) ) {
 
@@ -29,3 +30,4 @@ char Reader::peekNextChar() {
 		return c;
 	}
 }
+} // namespace Argonaut

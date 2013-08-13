@@ -19,6 +19,7 @@
 #include "JsonObject.h"
 #include "JsonValue.h"
 
+namespace Argonaut {
 JsonObject::JsonObject( std::vector<JsonValue *> * members )
 	: m_members( members ) {
 
@@ -31,3 +32,4 @@ JsonObject::~JsonObject() {
 const std::vector<JsonValue *> * JsonObject::getMembers() const {
 	return m_members;
 }
+} // namespace Argonaut

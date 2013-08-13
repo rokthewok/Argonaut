@@ -2,6 +2,7 @@
 #define  BOOLEANFORMATEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class BooleanFormatException : public std::logic_error {
 	public:
 		BooleanFormatException()
@@ -13,5 +14,5 @@ class BooleanFormatException : public std::logic_error {
 	private:
 		const char * m_message;
 };
-
+} // namespace Argonaut
 #endif   /* ----- #ifndef BOOLEANFORMATEXCEPTION_H  ----- */

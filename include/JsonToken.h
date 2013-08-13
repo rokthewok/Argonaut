@@ -10,6 +10,8 @@
  *
  * =====================================================================================
  */
+
+namespace Argonaut {
 class JsonToken {
 public:
 	JsonToken( JsonTypes type, std::string & token );
@@ -20,6 +22,6 @@ private:
 	std::string m_token;
 
 };
-
+} // namespace Argonaut
 
 #endif // JSON_TOKEN_H

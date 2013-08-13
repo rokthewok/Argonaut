@@ -2,6 +2,7 @@
 #define SYNTAX_EXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class SyntaxException : public std::logic_error {
 	public:
 		SyntaxException( const char * method )
@@ -13,5 +14,6 @@ class SyntaxException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif

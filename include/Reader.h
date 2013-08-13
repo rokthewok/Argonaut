@@ -3,6 +3,7 @@
 #include <istream>
 #include <string>
 
+namespace Argonaut {
 class Reader {
 	public:
 		explicit Reader( std::string & str );
@@ -12,5 +13,6 @@ class Reader {
 	private:
 		std::istream * m_in;
 };
+} // namespace Argonaut
 
 #endif

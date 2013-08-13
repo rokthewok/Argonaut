@@ -14,7 +14,7 @@ int main( int argc, char ** argv ) {
 		return -1;
 	}
 
-	Argonaut argonaut;
+	Argonaut::Argonaut argonaut;
 	if( argv[1][1] == 'i' ) {
 		argonaut.runInteractiveShell();
 	} else if( argv[1][1] == 'd' ) {

@@ -2,6 +2,7 @@
 #define  JSONOBJECT_H
 #include <vector>
 
+namespace Argonaut {
 class JsonValue;
 /*
  * =====================================================================================
@@ -18,5 +19,5 @@ class JsonObject {
 		std::vector<JsonValue *> * m_members;
 
 }; /* -----  end of class JsonObject  ----- */
-
+} // namespace Argonaut
 #endif   /* ----- #ifndef JSONOBJECT_H ----- */

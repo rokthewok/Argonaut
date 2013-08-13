@@ -2,6 +2,7 @@
 #define  MEMBERPARSINGEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class MemberParsingException : public std::logic_error {
 	public:
 		MemberParsingException()
@@ -13,5 +14,6 @@ class MemberParsingException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef MEMBERPARSINGEXCEPTION_H  ----- */

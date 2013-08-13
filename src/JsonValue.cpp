@@ -19,6 +19,7 @@
 #include "JsonValue.h"
 #include "JsonObject.h"
 
+namespace Argonaut {
 JsonValue::JsonValue( std::string & name, const std::string & val )
 	: m_type( JsonTypes::STRING ),
 	  m_string( val ),
@@ -112,3 +113,4 @@ bool JsonValue::isArray() const {
 bool JsonValue::isObject() const {
 	return m_type == JsonTypes::OBJECT ? true : false;
 }
+} // namespace Argonaut

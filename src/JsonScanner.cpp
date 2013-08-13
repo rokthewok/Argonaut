@@ -8,6 +8,7 @@
 #include "NullFormatException.h"
 #include "StringFormatException.h"
 
+namespace Argonaut {
 JsonScanner::JsonScanner( std::istream * in )
 	: m_reader( new Reader( in ) ) {
 
@@ -244,3 +245,4 @@ bool JsonScanner::isSpecialChar( char c ) {
 	static std::string characters( "\"\\/bfnrtu" );
 	return characters.find( c ) != std::string::npos ? true : false;
 }
+} // namespace Argonaut

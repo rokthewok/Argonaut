@@ -2,6 +2,7 @@
 #define  JSONPARSINGEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class JsonParsingException : public std::logic_error {
 	public:
 		JsonParsingException()
@@ -13,5 +14,6 @@ class JsonParsingException : public std::logic_error {
 	private:
 		const char * m_message;
 };
+} // namespace Argonaut
 
 #endif   /* ----- #ifndef JSONPARSINGEXCEPTION_H  ----- */

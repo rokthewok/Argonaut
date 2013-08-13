@@ -2,6 +2,7 @@
 #define  ARRAYPARSINGEXCEPTION_H
 #include <stdexcept>
 
+namespace Argonaut {
 class ArrayParsingException : public std::logic_error {
 	public:
 		ArrayParsingException()
@@ -13,5 +14,5 @@ class ArrayParsingException : public std::logic_error {
 	private:
 		const char * m_message;
 };
-
+} // namespace Argonaut
 #endif   /* ----- #ifndef ARRAYPARSINGEXCEPTION_H  ----- */
