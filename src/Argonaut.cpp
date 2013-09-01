@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <memory>
 #include "JsonParser.h"
 #include "JsonObject.h"
 #include "JsonValue.h"
@@ -34,7 +35,7 @@ void Argonaut::runExampleUsage() const {
 
 	JsonParser parser;
 
-	JsonObject * object = parser.parseJson( json );
+	std::unique_ptr<JsonObject> object = parser.parseJson( json );
 
 	const std::vector<JsonValue *> * members = object->getMembers();
 	// alternatively, use:
@@ -55,8 +56,6 @@ void Argonaut::runExampleUsage() const {
 		std::cout << "Mal drives a " << value->getString() << ". Sexy." << std::endl;
 	    }
 	}
-
-	delete object;
 }
 
 void Argonaut::runInteractiveShell() const {
@@ -68,7 +67,7 @@ void Argonaut::runInteractiveShell() const {
 
 	JsonParser parser;
 	std::string input;
-	JsonObject * object;
+	std::unique_ptr<JsonObject> object;
 	while( true ) {
 		std::cout << "argonaut> ";
 		std::getline( std::cin, input );
@@ -78,7 +77,6 @@ void Argonaut::runInteractiveShell() const {
 		try {
 			object = parser.parseJson( input );
 			printParsedJson( *object );
-			delete object;
 		} catch( const std::exception & e ) {
 			std::cout << "Error occured: " << e.what() << std::endl;
 		}

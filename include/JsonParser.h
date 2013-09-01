@@ -3,7 +3,7 @@
 #include <string>
 #include <istream>
 #include <vector>
-#include <unique_ptr>
+#include <memory>
 #include "JsonScanner.h"
 #include "JsonValue.h"
 
@@ -19,14 +19,17 @@ class JsonToken;
 class JsonParser {
 	public:
 		JsonParser();
-		JsonObject * parseJson( std::string & json );
-		JsonObject * parseJson( std::istream * json );
+		std::unique_ptr<JsonObject> parseJson( std::string & json );
+		std::unique_ptr<JsonObject> parseJson( std::istream * json );
 	protected:
-		JsonObject * parseJson( JsonScanner & scanner );
-		void parseMembers( JsonScanner & scanner, std::vector<JsonValue *> * members );
+		std::unique_ptr<JsonObject> parseJson( JsonScanner & scanner );
+		void parseMembers( JsonScanner & scanner, 
+				std::vector<JsonValue *> * members );
 		JsonValue * parsePair( JsonScanner & scanner );
-		void parseArray( JsonScanner & scanner, std::vector<JsonValue *> * values );
-		JsonValue * parseValue( JsonScanner & scanner, JsonToken * token, std::string & name );
+		void parseArray( JsonScanner & scanner, 
+				std::vector<JsonValue *> * values );
+		JsonValue * parseValue( JsonScanner & scanner, 
+				const JsonToken & token, const std::string & name );
 };
 } // namespace Argonaut
 

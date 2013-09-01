@@ -10,8 +10,9 @@ namespace Argonaut {
 class JsonScanner {
 	public:
 		JsonScanner( std::istream * in );
-		JsonScanner( std::string & str );
-		virtual JsonToken * getNextToken();
+		JsonScanner( const std::string & str );
+		~JsonScanner();
+		virtual JsonToken getNextToken();
 	protected:
 		bool isBlankOrNewline( char c );
 		bool isSpecialChar( char c );
@@ -29,10 +30,10 @@ class JsonScanner {
 			JSON_NULL
 		};
 
-		JsonToken * readNumberToken( ScannerState state, JsonTypes type, std::string & token );
-		JsonToken * readStringToken( std::string & token );
-		JsonToken * readBooleanToken( std::string & token );
-		JsonToken * readNullToken( std::string & token );
+		JsonToken readNumberToken( ScannerState state, JsonTypes type, std::string & token );
+		JsonToken readStringToken( std::string & token );
+		JsonToken readBooleanToken( std::string & token );
+		JsonToken readNullToken( std::string & token );
 		Reader * m_reader;
 };
 } // namespace Argonaut

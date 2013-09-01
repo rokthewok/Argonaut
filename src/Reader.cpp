@@ -3,7 +3,7 @@
 #include "Reader.h"
 
 namespace Argonaut {
-Reader::Reader( std::string & str )
+Reader::Reader( const std::string & str )
 	: m_in( new std::stringstream( str, std::stringstream::in ) ) {
 
 }

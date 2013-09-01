@@ -14,7 +14,8 @@
 namespace Argonaut {
 class JsonToken {
 public:
-	JsonToken( JsonTypes type, std::string & token );
+	JsonToken();
+	JsonToken( JsonTypes type, const std::string & token );
 	JsonTypes getType() const;
 	const std::string & getToken() const;
 private:

@@ -6,7 +6,7 @@
 namespace Argonaut {
 class Reader {
 	public:
-		explicit Reader( std::string & str );
+		explicit Reader( const std::string & str );
 		explicit Reader( std::istream * in );
 		virtual char getNextChar();
 		virtual char peekNextChar();

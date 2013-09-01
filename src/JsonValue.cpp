@@ -20,53 +20,53 @@
 #include "JsonObject.h"
 
 namespace Argonaut {
-JsonValue::JsonValue( std::string & name, const std::string & val )
+JsonValue::JsonValue( const std::string & name, const std::string & val )
 	: m_type( JsonTypes::STRING ),
 	  m_string( val ),
 	  m_name( name ) {
 
 }
 
-JsonValue::JsonValue( std::string & name, int val )
+JsonValue::JsonValue( const std::string & name, int val )
 	: m_type( JsonTypes::INTEGER ),
 	  m_int( val ),
 	  m_name( name ) {
 
 }
 
-JsonValue::JsonValue( std::string & name, double val )
+JsonValue::JsonValue( const std::string & name, double val )
 	: m_type( JsonTypes::REAL ),
 	  m_real( val ),
 	  m_name( name ) {
 		  
 }
  
-JsonValue::JsonValue( std::string & name, std::vector<JsonValue *> * val )
+JsonValue::JsonValue( const std::string & name, std::vector<JsonValue *> * val )
 	: m_type( JsonTypes::ARRAY ),
 	  m_array( val ),
 	  m_name( name ) {
 		  
 }
 
-JsonValue::JsonValue( std::string & name, bool val )
+JsonValue::JsonValue( const std::string & name, bool val )
 	: m_type( JsonTypes::BOOLEAN ),
 	  m_boolean( val ),
 	  m_name( name ) {
 		  
 }
 
-JsonValue::JsonValue( std::string & name, JsonObject * val )
+JsonValue::JsonValue( const std::string & name, JsonObject * val )
 	: m_type( JsonTypes::OBJECT ),
 	  m_object( val ),
 	  m_name( name ) {
 		  
 }
 
-std::string JsonValue::getName() const {
+const std::string & JsonValue::getName() const {
 	return m_name;
 }
 
-std::string JsonValue::getString() const {
+const std::string & JsonValue::getString() const {
 	return m_string;
 }
 

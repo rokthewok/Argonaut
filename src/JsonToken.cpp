@@ -21,11 +21,13 @@
 #include "JsonToken.h"
 
 namespace Argonaut {
-JsonToken::JsonToken( JsonTypes type, std::string & token )
-	: m_type( type ),
-	  m_token( token ) {
+JsonToken::JsonToken()
+	: JsonToken( JsonTypes::NONE, 
+	  std::string( "" ) ) { }
 
-}
+JsonToken::JsonToken( JsonTypes type, const std::string & token )
+	: m_type( type ),
+	  m_token( token ) { }
 
 JsonTypes JsonToken::getType() const {
 	return m_type;

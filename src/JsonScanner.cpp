@@ -14,14 +14,17 @@ JsonScanner::JsonScanner( std::istream * in )
 
 }
 
-JsonScanner::JsonScanner( std::string & str )
+JsonScanner::JsonScanner( const std::string & str )
 	: m_reader( new Reader( str ) ) {
 
 }
 
-JsonToken * JsonScanner::getNextToken() {
+JsonScanner::~JsonScanner() {
+	delete m_reader;
+}
+
+JsonToken JsonScanner::getNextToken() {
 	char c;
-	JsonToken * jsonToken = nullptr;
 	std::string token;
 	JsonTypes type;
 	ScannerState state = ScannerState::START;
@@ -32,27 +35,27 @@ JsonToken * JsonScanner::getNextToken() {
 	}
 
 	if( c == '\0' ) {
-		return new JsonToken( JsonTypes::END_OF_STREAM, token );
+		return JsonToken( JsonTypes::END_OF_STREAM, token );
 	}
 
 	if( c == '{' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::OPEN_BRACE, token );
+		return JsonToken( JsonTypes::OPEN_BRACE, token );
 	} else if( c == '}' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::CLOSE_BRACE, token );
+		return JsonToken( JsonTypes::CLOSE_BRACE, token );
 	} else if( c == '[' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::OPEN_BRACKET, token );
+		return JsonToken( JsonTypes::OPEN_BRACKET, token );
 	} else if( c == ']' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::CLOSE_BRACKET, token );
+		return JsonToken( JsonTypes::CLOSE_BRACKET, token );
 	} else if( c == ',' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::COMMA, token );
+		return JsonToken( JsonTypes::COMMA, token );
 	} else if( c == ':' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::COLON, token );
+		return JsonToken( JsonTypes::COLON, token );
 	} else if( isdigit( c ) || c == '-' || c == '.' ) {
 		if( c == '.' ) {
 			state = ScannerState::REAL;
@@ -64,27 +67,27 @@ JsonToken * JsonScanner::getNextToken() {
 		token.push_back( c );
 		try {	
 			return readNumberToken( state, type, token );
-		} catch( NumberFormatException e ) {
+		} catch( const NumberFormatException & e ) {
 			throw;
 		}
 	} else if( c == 't' || c == 'f' ) {
 		token.push_back( c );
 		try {	
 			return readBooleanToken( token );
-		} catch( BooleanFormatException e ) {
+		} catch( const BooleanFormatException & e ) {
 			throw;
 		}
 	} else if( c == '\"' ) {
 		try {	
 			return readStringToken( token );
-		} catch( StringFormatException e ) {
+		} catch( const StringFormatException & e ) {
 			throw;
 		}
 	} else if( c == 'n' ) {
 		token.push_back( c );
 		try {	
 			return readNullToken( token );
-		} catch( NullFormatException e ) {
+		} catch( const NullFormatException & e ) {
 			throw;
 		}
 	} else {
@@ -92,14 +95,14 @@ JsonToken * JsonScanner::getNextToken() {
 	}
 }
 
-JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, std::string & token ) {
+JsonToken JsonScanner::readNumberToken( ScannerState state, JsonTypes type, std::string & token ) {
 	char c;
 	
 	while( true ) {
 		c = m_reader->peekNextChar();
 
 		if( isBlankOrNewline( c ) || c == '\0' || c == ',' ) {
-			return new JsonToken( type, token );
+			return JsonToken( type, token );
 		} else {
 			c = m_reader->getNextChar();
 		}
@@ -113,28 +116,23 @@ JsonToken * JsonScanner::readNumberToken( ScannerState state, JsonTypes type, st
 				type = JsonTypes::REAL;
 				token.push_back( c );
 			} else {
-				// TODO throw syntax error here
 				throw NumberFormatException();
-				//return nullptr;
 			}
 			break;
 		case ScannerState::REAL:
 			if( isdigit( c ) ) {
 				token.push_back( c );
 			} else {
-				// TODO throw syntax error here
 				throw NumberFormatException();
-				//return nullptr;
 			}
 			break;
 		default:
 			throw NumberFormatException();
-			//return nullptr;
 		};
 	}
 }
 
-JsonToken * JsonScanner::readStringToken( std::string & token ) {
+JsonToken JsonScanner::readStringToken( std::string & token ) {
 	char c;
 	JsonTypes type = JsonTypes::STRING;
 	ScannerState state = ScannerState::STRING;
@@ -143,7 +141,7 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 		switch ( state ) {
 			case ScannerState::STRING:
 				if( c == '\"' ) {
-					return new JsonToken( type, token );
+					return JsonToken( type, token );
 				} else if( c == '\\' ) {
 					state = ScannerState::SP_CHAR;
 					token.push_back( c );
@@ -157,18 +155,16 @@ JsonToken * JsonScanner::readStringToken( std::string & token ) {
 					state = ScannerState::STRING;
 				} else {
 					throw StringFormatException();
-					//return nullptr;
 				}
 				break;
 			default:
 				throw StringFormatException();
-				//return nullptr;
 				break;
 		}
 	}
 }
 
-JsonToken * JsonScanner::readBooleanToken( std::string & token ) { char c;
+JsonToken JsonScanner::readBooleanToken( std::string & token ) { char c;
 	char next = token == "t" ? 'r' : 'a';
 	JsonTypes type = JsonTypes::BOOLEAN;
 	ScannerState state = token == "t" ? ScannerState::TRUE : ScannerState::FALSE;
@@ -177,38 +173,35 @@ JsonToken * JsonScanner::readBooleanToken( std::string & token ) { char c;
 		c = m_reader->getNextChar();
 
 		switch ( state ) {
-			case ScannerState::TRUE:
-				if( c == next ) {
-					token.push_back( c );
-					if( next == 'r' ) next = 'u';
-					else if( next == 'u' ) next = 'e';
-					else return new JsonToken( type, token );
-				} else {
-					throw BooleanFormatException();
-					//return nullptr;
-				}
-				break;
-			case ScannerState::FALSE:
-				if( c == next ) {
-					token.push_back( c );
-					if( next == 'a' ) next = 'l';
-					else if( next == 'l' ) next = 's';
-					else if( next == 's' ) next = 'e';
-					else return new JsonToken( type, token );
-				} else {
-					throw BooleanFormatException();
-					//return nullptr;
-				}
-				break;
-			default:
+		case ScannerState::TRUE:
+			if( c == next ) {
+				token.push_back( c );
+				if( next == 'r' ) next = 'u';
+				else if( next == 'u' ) next = 'e';
+				else return JsonToken( type, token );
+			} else {
 				throw BooleanFormatException();
-				//return nullptr;
-				break;
+			}
+			break;
+		case ScannerState::FALSE:
+			if( c == next ) {
+				token.push_back( c );
+				if( next == 'a' ) next = 'l';
+				else if( next == 'l' ) next = 's';
+				else if( next == 's' ) next = 'e';
+				else return JsonToken( type, token );
+			} else {
+				throw BooleanFormatException();
+			}
+			break;
+		default:
+			throw BooleanFormatException();
+			break;
 		}
 	}
 }
 
-JsonToken * JsonScanner::readNullToken( std::string & token ) {
+JsonToken JsonScanner::readNullToken( std::string & token ) {
 	char c;
 	char next = 'u';
 
@@ -221,7 +214,6 @@ JsonToken * JsonScanner::readNullToken( std::string & token ) {
 			else if( next == 'l' ) break;
 		} else {
 			throw NullFormatException();
-			//return nullptr;
 		}
 	}
 
@@ -229,10 +221,9 @@ JsonToken * JsonScanner::readNullToken( std::string & token ) {
 
 	if( c == 'l' ) {
 		token.push_back( c );
-		return new JsonToken( JsonTypes::NULLTYPE, token );
+		return JsonToken( JsonTypes::NULLTYPE, token );
 	} else {
 		throw NullFormatException();
-		//return nullptr;
 	}
 }
 

@@ -14,15 +14,15 @@ class JsonObject;
  */
 class JsonValue {
 	public:
-		JsonValue( std::string & name, const std::string & val );
-		JsonValue( std::string & name, int val );
-		JsonValue( std::string & name, double val );
-		JsonValue( std::string & name, std::vector<JsonValue *> * val );
-		JsonValue( std::string & name, bool val );
-		JsonValue( std::string & name, JsonObject * val );
+		JsonValue( const std::string & name, const std::string & val );
+		JsonValue( const std::string & name, int val );
+		JsonValue( const std::string & name, double val );
+		JsonValue( const std::string & name, std::vector<JsonValue *> * val );
+		JsonValue( const std::string & name, bool val );
+		JsonValue( const std::string & name, JsonObject * val );
 
-		std::string getName() const;
-		std::string getString() const;
+		const std::string & getName() const;
+		const std::string & getString() const;
 		int getInteger() const;
 		double getReal() const;
 		std::vector<JsonValue *> * getArray() const;

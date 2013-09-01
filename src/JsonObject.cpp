@@ -26,6 +26,11 @@ JsonObject::JsonObject( std::vector<JsonValue *> * members )
 }
 
 JsonObject::~JsonObject() {
+	typedef std::vector<JsonValue *>::iterator MemberIt;
+	for( MemberIt m = m_members->begin(); m != m_members->end(); ++m ) {
+		delete *m;
+	}
+
 	delete m_members;
 }
 

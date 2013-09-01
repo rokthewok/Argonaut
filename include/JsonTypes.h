@@ -18,7 +18,8 @@ enum class JsonTypes : std::int8_t {
 	CLOSE_BRACKET = 10,
 	COMMA = 11,
 	COLON = 12,
-	END_OF_STREAM = 13
+	END_OF_STREAM = 13,
+	NONE = 14
 };
 } // namespace Argonaut
 
