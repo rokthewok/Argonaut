@@ -3,6 +3,7 @@
 #include <string>
 #include <istream>
 #include <vector>
+#include <unique_ptr>
 #include "JsonScanner.h"
 #include "JsonValue.h"
 

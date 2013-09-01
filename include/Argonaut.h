@@ -13,14 +13,15 @@
 namespace Argonaut {
 class Argonaut
 {
-	public:
-		Argonaut ();
-		void runExampleUsage() const;
-		void runInteractiveShell() const;
-	private:
-		void printParsedJson( JsonObject * object ) const;
-		void printParsedJson( JsonObject * object, std::string indent ) const;
-		void printArray( std::vector<JsonValue *> * values ) const;
+public:
+	Argonaut ();
+	void runExampleUsage() const;
+	void runInteractiveShell() const;
+private:
+	void printParsedJson( const JsonObject & object ) const;
+	void printParsedJson( const JsonObject & object, 
+			const std::string & indent ) const;
+	void printArray( const std::vector<JsonValue *> & values ) const;
 
 }; /* -----  end of class Argonaut  ----- */
 } // namespace Argonaut
