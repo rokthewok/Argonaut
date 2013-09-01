@@ -8,33 +8,33 @@
 
 namespace Argonaut {
 class JsonScanner {
-	public:
-		JsonScanner( std::istream * in );
-		JsonScanner( const std::string & str );
-		~JsonScanner();
-		virtual JsonToken getNextToken();
-	protected:
-		bool isBlankOrNewline( char c );
-		bool isSpecialChar( char c );
+public:
+    JsonScanner( std::istream * in );
+    JsonScanner( const std::string & str );
+    ~JsonScanner();
+    virtual JsonToken getNextToken();
+protected:
+    bool isBlankOrNewline( char c );
+    bool isSpecialChar( char c );
 
-	private:
-		enum class ScannerState : uint8_t {
-			START,
-			STRING,
-			SP_CHAR,
-			DIGIT,
-			INTEGER,
-			REAL,
-			TRUE,
-			FALSE,
-			JSON_NULL
-		};
+private:
+    enum class ScannerState : uint8_t {
+        START,
+        STRING,
+        SP_CHAR,
+        DIGIT,
+        INTEGER,
+        REAL,
+        TRUE,
+        FALSE,
+        JSON_NULL
+    };
 
-		JsonToken readNumberToken( ScannerState state, JsonTypes type, std::string & token );
-		JsonToken readStringToken( std::string & token );
-		JsonToken readBooleanToken( std::string & token );
-		JsonToken readNullToken( std::string & token );
-		Reader * m_reader;
+    JsonToken readNumberToken( ScannerState state, JsonTypes type, std::string & token );
+    JsonToken readStringToken( std::string & token );
+    JsonToken readBooleanToken( std::string & token );
+    JsonToken readNullToken( std::string & token );
+    Reader * m_reader;
 };
 } // namespace Argonaut
 

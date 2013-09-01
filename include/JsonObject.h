@@ -11,12 +11,12 @@ class JsonValue;
  * =====================================================================================
  */
 class JsonObject {
-	public:
-		explicit JsonObject( std::vector<JsonValue *> * members );
-		~JsonObject();
-		const std::vector<JsonValue *> * getMembers() const;
-	private:
-		std::vector<JsonValue *> * m_members;
+public:
+    explicit JsonObject( std::vector<JsonValue *> * members );
+    ~JsonObject();
+    const std::vector<JsonValue *> * getMembers() const;
+private:
+    std::vector<JsonValue *> * m_members;
 
 }; /* -----  end of class JsonObject  ----- */
 } // namespace Argonaut

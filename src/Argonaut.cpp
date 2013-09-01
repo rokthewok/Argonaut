@@ -31,19 +31,21 @@ Argonaut::Argonaut() {
 
 void Argonaut::runExampleUsage() const {
 
-	std::string json( "{ \"name\" : \"Malcolm Reynolds\" , \"vehicle\" : \"Firefly\" , \"age\" : 31 , \"wanted\" : true }" );
+	std::string json( "{ \"name\" : \"Malcolm Reynolds\" , "
+					  "\"vehicle\" : \"Firefly\" , \"age\" : "
+					  "31 , \"wanted\" : true }" );
 
 	JsonParser parser;
-
 	std::unique_ptr<JsonObject> object = parser.parseJson( json );
-
 	const std::vector<JsonValue *> * members = object->getMembers();
 	// alternatively, use:
 	// auto members = object->getMembers();
+	
+	std::cout << "Raw JSON: " << json << std::endl;
 
 	for( auto value : *members ) {
 	    if( value->getName() == "name" && value->isString() ) {
-		std::cout << value->getString() << std::endl;
+			std::cout << value->getString() << std::endl;
 	    } else if( value->isBoolean() ) {
 		if( value->getBoolean() ) {
 		    std::cout << "Mal is a wanted man!" << std::endl;
@@ -51,9 +53,9 @@ void Argonaut::runExampleUsage() const {
 		    std::cout << "Mal is not wanted" << std::endl;
 		}
 	    } else if( value->getName() == "age" ) {
-		std::cout << "Mal is " << value->getInteger() << " years old." << std::endl;
+			std::cout << "Mal is " << value->getInteger() << " years old." << std::endl;
 	    } else if( value->getName() == "vehicle" ) {
-		std::cout << "Mal drives a " << value->getString() << ". Sexy." << std::endl;
+			std::cout << "Mal drives a " << value->getString() << ". Sexy." << std::endl;
 	    }
 	}
 }

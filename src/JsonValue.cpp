@@ -16,6 +16,7 @@
  * =====================================================================================
  */
 
+#include <iostream>
 #include "JsonValue.h"
 #include "JsonObject.h"
 
@@ -60,6 +61,10 @@ JsonValue::JsonValue( const std::string & name, JsonObject * val )
 	  m_object( val ),
 	  m_name( name ) {
 		  
+}
+
+JsonValue::~JsonValue() {
+	std::cout << "Deleting JsonValue..." << std::endl;
 }
 
 const std::string & JsonValue::getName() const {
