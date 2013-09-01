@@ -95,7 +95,7 @@ void Argonaut::printArray( const std::vector<JsonValue *> & values ) const {
 	for( auto pair : values ) {
 		if( pair->isArray() ) {
 			std::cout << "Values: ";
-			printArray( *pair->getArray() );
+			printArray( pair->getArray() );
 		} else if( pair->isBoolean() ) {
 			if( pair->getBoolean() ) {
 				std::cout << "true";
@@ -105,7 +105,7 @@ void Argonaut::printArray( const std::vector<JsonValue *> & values ) const {
 		} else if( pair->isInteger() ) {
 			std::cout << pair->getInteger();
 		} else if( pair->isObject() ) {
-			printParsedJson( *pair->getObject() );
+			printParsedJson( pair->getObject() );
 		} else if( pair->isReal() ) {
 			std::cout << pair->getReal();
 		} else if( pair->isString() ) {
@@ -130,7 +130,7 @@ void Argonaut::printParsedJson( const JsonObject & object,
 		if( pair->isArray() ) {
 			std::cout << indent << "Type: Array" << std::endl;
 			std::cout << indent << "Values: ";
-			printArray( *pair->getArray() );
+			printArray( pair->getArray() );
 		} else if( pair->isBoolean() ) {
 			std::cout << indent << "Type: Boolean" << std::endl;
 			std::cout << indent << "Value: ";
@@ -144,7 +144,7 @@ void Argonaut::printParsedJson( const JsonObject & object,
 			std::cout << indent << "Value: " << pair->getInteger() << std::endl;
 		} else if( pair->isObject() ) {
 			std::cout << indent << "Type: Object" << std::endl;
-			printParsedJson( *pair->getObject(), nextIndent );
+			printParsedJson( pair->getObject(), nextIndent );
 		} else if( pair->isReal() ) {
 			std::cout << indent << "Type: Real" << std::endl;
 			std::cout << indent << "Value: " << pair->getReal() << std::endl;

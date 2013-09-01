@@ -26,9 +26,9 @@ public:
     const std::string & getString() const;
     int getInteger() const;
     double getReal() const;
-    std::vector<JsonValue *> * getArray() const;
+    const std::vector<JsonValue *> & getArray() const;
     bool getBoolean() const;
-    JsonObject * getObject() const;
+    const JsonObject & getObject() const;
 
     bool isString() const;
     bool isInteger() const;
@@ -44,7 +44,7 @@ private:
     double m_real;
     std::vector<JsonValue *> * m_array;
     bool m_boolean;
-		JsonObject * m_object;
+    JsonObject * m_object;
 }; /* -----  end of class JsonValue  ----- */
 } // namespace Argonaut
 

@@ -83,16 +83,16 @@ double JsonValue::getReal() const {
 	return m_real;
 }
 
-std::vector<JsonValue *> * JsonValue::getArray() const {
-	return m_array;
+const std::vector<JsonValue *> & JsonValue::getArray() const {
+	return *m_array;
 }
 
 bool JsonValue::getBoolean() const {
 	return m_boolean;
 }
 
-JsonObject * JsonValue::getObject() const {
-	return m_object;
+const JsonObject & JsonValue::getObject() const {
+	return *m_object;
 }
 
 bool JsonValue::isString() const {
