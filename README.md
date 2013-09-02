@@ -19,11 +19,11 @@ Example usage code:
 
 	JsonObject * object = parser.parseJson( json );
 
-	const std::vector<JsonValue *> * members = object->getMembers();
+	const std::vector<JsonValue *> members = object->getMembers();
 	// alternatively, use:
 	// auto members = object->getMembers();
 
-	for( auto value : *members ) {
+	for( auto value : members ) {
 	    if( value->getName() == "name" && value->isString() ) {
 		std::cout << value->getString() << std::endl;
 	    } else if( value->isBoolean() ) {
@@ -46,7 +46,7 @@ Example usage code:
 TODO:
 ----
 
-*	Make the interface more explicit about memory management (e.g. use unique_ptr / shared_ptr)
+*   Change JSON Objects to behave more like STL containers, rather than exposing the underlying representation
 *	Provide more robust testing for the entire system
-*	Create DLL's
+*	Create shared and static libraries
 *	Add better documentation for the client
