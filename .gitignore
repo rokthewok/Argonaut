@@ -1,5 +1,7 @@
 *.o
 *.swp
+*.a
+*.so
 test_argonaut
 argonaut
 tags
