@@ -14,7 +14,7 @@ namespace Argonaut {
 class Argonaut
 {
 public:
-	Argonaut ();
+	Argonaut();
 	void runExampleUsage() const;
 	void runInteractiveShell() const;
 private:

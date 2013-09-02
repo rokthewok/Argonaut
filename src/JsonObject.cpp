@@ -36,7 +36,7 @@ JsonObject::~JsonObject() {
 	std::cout << "Deleting JsonObject..." << std::endl;
 }
 
-const std::vector<JsonValue *> * JsonObject::getMembers() const {
-	return m_members;
+const std::vector<JsonValue *> & JsonObject::getMembers() const {
+	return *m_members;
 }
 } // namespace Argonaut

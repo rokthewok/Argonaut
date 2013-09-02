@@ -6,11 +6,10 @@ namespace Argonaut {
 class JsonParsingException : public std::logic_error {
 public:
     JsonParsingException()
-                : std::logic_error( "" ), m_message( "JsonParsingException" ) { };
-    virtual const char *  what() const throw() {
-        return m_message;
-    };
-
+            : std::logic_error( "" ), 
+              m_message( "JsonParsingException" ) { };
+    virtual const char *  what() const throw() 
+            { return m_message; };
 private:
     const char * m_message;
 };

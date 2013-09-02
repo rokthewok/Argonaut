@@ -13,6 +13,7 @@ public:
     virtual char peekNextChar();
 private:
     std::istream * m_in;
+    bool m_isStringStream;
 };
 } // namespace Argonaut
 

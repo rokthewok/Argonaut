@@ -4,17 +4,17 @@
 
 namespace Argonaut {
 Reader::Reader( const std::string & str )
-	: m_in( new std::stringstream( str, std::stringstream::in ) ) {
-
-}
+	: m_in( new std::stringstream( str, std::stringstream::in ) ),
+      m_isStringStream( true ) { }
 
 Reader::Reader( std::istream * in )
-	: m_in( in ) {
-
-}
+	: m_in( in ),
+      m_isStringStream( false ) { }
 
 Reader::~Reader() {
-    delete m_in;
+    if( m_isStringStream ) {
+        delete m_in;
+    }
 }
 
 char Reader::getNextChar() {

@@ -14,7 +14,7 @@ class JsonObject {
 public:
     explicit JsonObject( std::vector<JsonValue *> * members );
     ~JsonObject();
-    const std::vector<JsonValue *> * getMembers() const;
+    const std::vector<JsonValue *> & getMembers() const;
 private:
     std::vector<JsonValue *> * m_members;
 
