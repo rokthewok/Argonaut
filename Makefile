@@ -8,6 +8,7 @@ incl = include/
 src = src/
 bin = bin/
 test = test/
+lib = lib/
 
 obj = main.o JsonScanner.o Reader.o JsonToken.o JsonObject.o JsonValue.o JsonParser.o SyntaxException.h \
 		BooleanFormatException.h NumberFormatException.h NullFormatException.h StringFormatException.h \
@@ -16,8 +17,10 @@ binobj = $(bin)main.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin
 testobj = JsonScannerTests.o test.o JsonScanner.o Reader.o JsonToken.o BaseTests.o JsonParserTests.o \
 		  JsonObject.o JsonValue.o JsonParser.o
 testbinobj = $(bin)JsonScannerTests.o $(bin)test.o $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)BaseTests.o $(bin)JsonParser.o $(bin)JsonParserTests.o $(bin)JsonObject.o $(bin)JsonValue.o
+libbinobj = $(bin)JsonScanner.o $(bin)Reader.o $(bin)JsonToken.o $(bin)JsonObject.o $(bin)JsonValue.o $(bin)JsonParser.o
 
-$(shell mkdir bin/)
+$(shell mkdir -p bin/)
+$(shell mkdir -p lib/)
 
 argonaut : $(obj)
 	g++ -o argonaut $(binobj) $(incl)SyntaxException.h
@@ -25,11 +28,11 @@ main.o : main.cpp Argonaut.o
 	g++ $(CFLAGS) -c $(src)main.cpp -o $(bin)main.o
 Argonaut.o : Argonaut.h Argonaut.cpp JsonParser.o
 	g++ $(CFLAGS) -c $(src)Argonaut.cpp -o $(bin)Argonaut.o
-JsonParser.o : JsonParser.h JsonParser.cpp JsonScanner.o
+JsonParser.o : JsonParser.h JsonParser.cpp JsonScanner.o JsonObject.o JsonValue.o Reader.o
 	g++ $(CFLAGS) -c $(src)JsonParser.cpp -o $(bin)JsonParser.o
 JsonScanner.o : JsonScanner.h JsonScanner.cpp Reader.o SyntaxException.h JsonToken.h JsonToken.o 
 	g++ $(CFLAGS) -c $(src)JsonScanner.cpp -o $(bin)JsonScanner.o
-JsonObject.o : JsonObject.h JsonObject.cpp
+JsonObject.o : JsonObject.h JsonObject.cpp JsonValue.o
 	g++ $(CFLAGS) -c $(src)JsonObject.cpp -o $(bin)JsonObject.o
 JsonToken.o : JsonToken.h JsonTypes.h JsonToken.cpp
 	g++ $(CFLAGS) -c $(src)JsonToken.cpp -o $(bin)JsonToken.o
@@ -49,5 +52,11 @@ JsonParserTests.o : JsonParserTests.h JsonParserTests.cpp JsonParser.o BaseTests
 	g++ $(TESTCFLAGS) -c $(test)src/JsonParserTests.cpp -o $(bin)JsonParserTests.o
 JsonScannerTests.o : JsonScannerTests.h JsonScannerTests.cpp JsonScanner.o BaseTests.o
 	g++ $(TESTCFLAGS) -c $(test)src/JsonScannerTests.cpp -o $(bin)JsonScannerTests.o
+
+# library builds
+libstatic : JsonParser.o
+	ar cq $(lib)libargonaut.a $(libbinobj)
+# libshared :
 clean :
 	rm -rf bin/ argonaut test_argonaut
+	rm -rf lib/
