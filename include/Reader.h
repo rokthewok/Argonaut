@@ -8,6 +8,7 @@ class Reader {
 public:
     explicit Reader( const std::string & str );
     explicit Reader( std::istream * in );
+    ~Reader();
     virtual char getNextChar();
     virtual char peekNextChar();
 private:

@@ -13,6 +13,10 @@ Reader::Reader( std::istream * in )
 
 }
 
+Reader::~Reader() {
+    delete m_in;
+}
+
 char Reader::getNextChar() {
 	char c = m_in->get();
 	if( c == EOF ) {

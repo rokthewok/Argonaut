@@ -65,31 +65,15 @@ JsonToken JsonScanner::getNextToken() {
 			type = JsonTypes::INTEGER;
 		}
 		token.push_back( c );
-		try {	
-			return readNumberToken( state, type, token );
-		} catch( const NumberFormatException & e ) {
-			throw;
-		}
+        return readNumberToken( state, type, token );
 	} else if( c == 't' || c == 'f' ) {
 		token.push_back( c );
-		try {	
-			return readBooleanToken( token );
-		} catch( const BooleanFormatException & e ) {
-			throw;
-		}
+        return readBooleanToken( token );
 	} else if( c == '\"' ) {
-		try {	
-			return readStringToken( token );
-		} catch( const StringFormatException & e ) {
-			throw;
-		}
+        return readStringToken( token );
 	} else if( c == 'n' ) {
 		token.push_back( c );
-		try {	
-			return readNullToken( token );
-		} catch( const NullFormatException & e ) {
-			throw;
-		}
+        return readNullToken( token );
 	} else {
 		throw SyntaxException( "error in JsonScanner" );
 	}
@@ -136,31 +120,35 @@ JsonToken JsonScanner::readStringToken( std::string & token ) {
 	char c;
 	JsonTypes type = JsonTypes::STRING;
 	ScannerState state = ScannerState::STRING;
+
+    c = m_reader->getNextChar();
+    if( c == '\0' ) throw StringFormatException();
+
 	while( true ) {
-		c = m_reader->getNextChar();
 		switch ( state ) {
-			case ScannerState::STRING:
-				if( c == '\"' ) {
-					return JsonToken( type, token );
-				} else if( c == '\\' ) {
-					state = ScannerState::SP_CHAR;
-					token.push_back( c );
-				} else {
-					token.push_back( c );
-				}
-				break;
-			case ScannerState::SP_CHAR:
-				if( isSpecialChar( c ) ) {
-					token.push_back( c );
-					state = ScannerState::STRING;
-				} else {
-					throw StringFormatException();
-				}
-				break;
-			default:
-				throw StringFormatException();
-				break;
+        case ScannerState::STRING:
+            if( c == '\"' ) {
+                return JsonToken( type, token );
+            } else if( c == '\\' ) {
+                state = ScannerState::SP_CHAR;
+                token.push_back( c );
+            } else {
+                token.push_back( c );
+            }
+            break;
+        case ScannerState::SP_CHAR:
+            if( isSpecialChar( c ) ) {
+                token.push_back( c );
+                state = ScannerState::STRING;
+            } else {
+                throw StringFormatException();
+            }
+            break;
+        default:
+            throw StringFormatException();
+            break;
 		}
+		c = m_reader->getNextChar();
 	}
 }
 
