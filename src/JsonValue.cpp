@@ -118,4 +118,33 @@ bool JsonValue::isArray() const {
 bool JsonValue::isObject() const {
 	return m_type == JsonTypes::OBJECT ? true : false;
 }
+
+void JsonValue::print( std::ostream & out ) const {
+    switch( m_type ) {
+    case JsonTypes::BOOLEAN:
+        std::cout << m_name << " : " << m_boolean;
+        break;
+    case JsonTypes::INTEGER:
+        std::cout << m_name << " : " << m_int;
+        break;
+    case JsonTypes::REAL:
+        std::cout << m_name << " : " << m_real;
+        break;
+    case JsonTypes::STRING:
+        std::cout << m_name << " : " << m_string;
+        break;
+    case JsonTypes::ARRAY:
+        std::cout << m_name << " : [ ";
+        for( auto it = m_array->begin(); it != m_array->end(); ++it ) {
+            std::cout << **it << " , ";
+        }
+        std::cout << " ]";
+        break;
+    case JsonTypes::OBJECT:
+        std::cout << m_name << " : " << *m_object;
+        break;
+    default:
+        break;
+    }
+}
 } // namespace Argonaut

@@ -39,4 +39,12 @@ JsonObject::~JsonObject() {
 const std::vector<JsonValue *> & JsonObject::getMembers() const {
 	return *m_members;
 }
+
+void JsonObject::print( std::ostream & out ) const {
+    out << "{ ";
+    for( auto it = m_members->begin(); it != m_members->end(); ++it ) {
+        out << **it << " , ";
+    }
+    out << "}";
+}
 } // namespace Argonaut

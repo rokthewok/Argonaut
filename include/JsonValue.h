@@ -36,6 +36,8 @@ public:
     bool isBoolean() const;
     bool isArray() const;
     bool isObject() const;
+
+    void print( std::ostream & out ) const;
 private:
     std::string m_name;
     JsonTypes m_type;
@@ -46,6 +48,13 @@ private:
     bool m_boolean;
     JsonObject * m_object;
 }; /* -----  end of class JsonValue  ----- */
+
+inline std::ostream & operator<<( std::ostream & out,
+        const JsonValue & val ) {
+    val.print( out );
+
+    return out;
+}
 } // namespace Argonaut
 
 #endif   /* ----- #ifndef JsonValue_INC  ----- */
