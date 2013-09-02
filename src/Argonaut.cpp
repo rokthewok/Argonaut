@@ -37,13 +37,13 @@ void Argonaut::runExampleUsage() const {
 
 	JsonParser parser;
 	std::unique_ptr<JsonObject> object = parser.parseJson( json );
-	const std::vector<JsonValue *> * members = object->getMembers();
+	const std::vector<JsonValue *> & members = object->getMembers();
 	// alternatively, use:
 	// auto members = object->getMembers();
 	
 	std::cout << "Raw JSON: " << json << std::endl;
 
-	for( auto value : *members ) {
+	for( auto value : members ) {
 	    if( value->getName() == "name" && value->isString() ) {
 			std::cout << value->getString() << std::endl;
 	    } else if( value->isBoolean() ) {
@@ -123,9 +123,9 @@ void Argonaut::printArray( const std::vector<JsonValue *> & values ) const {
 void Argonaut::printParsedJson( const JsonObject & object, 
 		const std::string & indent ) const {
 	std::string nextIndent = indent + "\t";
-	const std::vector<JsonValue *> * members = object.getMembers();
+	const std::vector<JsonValue *> & members = object.getMembers();
 	
-	for( auto pair : *members ) {
+	for( auto pair : members ) {
 		std::cout << indent << "Name: " << pair->getName() << std::endl;
 		if( pair->isArray() ) {
 			std::cout << indent << "Type: Array" << std::endl;
