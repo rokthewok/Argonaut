@@ -64,7 +64,7 @@ JsonValue::JsonValue( const std::string & name, JsonObject * val )
 }
 
 JsonValue::~JsonValue() {
-	std::cout << "Deleting JsonValue..." << std::endl;
+	// std::cout << "Deleting JsonValue..." << std::endl;
 }
 
 const std::string & JsonValue::getName() const {

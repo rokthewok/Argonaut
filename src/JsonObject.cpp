@@ -33,7 +33,7 @@ JsonObject::~JsonObject() {
 	}
 
 	delete m_members;
-	std::cout << "Deleting JsonObject..." << std::endl;
+	// std::cout << "Deleting JsonObject..." << std::endl;
 }
 
 const std::vector<JsonValue *> & JsonObject::getMembers() const {
