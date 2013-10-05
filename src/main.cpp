@@ -21,7 +21,13 @@ int main( int argc, char ** argv ) {
 		argonaut.runExampleUsage();
 	} else if( argv[1][1] == 'h' ) {
 		printHelp();
-	} else {
+	} else if( argv[1][1] == 'f' ) {
+        if( argc < 3 ) {
+            printHelp();
+        } else {
+            argonaut.parseBigFile( std::string( argv[2] ) );
+        }
+    } else {
 		std::cout << "improper usage. Use -h flag for help." << std::endl;
 		return -1;
 	}
@@ -32,5 +38,7 @@ int main( int argc, char ** argv ) {
 void printHelp() {
 	std::cout << "Argonaut usage: " << std::endl;
 	std::cout << "\t-i\tinteractive shell mode" << std::endl;
+	std::cout << "\t-h\thelp mode (list these options)" << std::endl;
 	std::cout << "\t-d\tdemo (example usage) mode" << std::endl;
+	std::cout << "\t-f <filename>\tparse file mode" << std::endl;
 }
