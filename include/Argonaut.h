@@ -15,6 +15,7 @@ class Argonaut
 {
 public:
 	Argonaut();
+    void parseBigFile( const std::string & filename );
 	void runExampleUsage() const;
 	void runInteractiveShell() const;
 private:

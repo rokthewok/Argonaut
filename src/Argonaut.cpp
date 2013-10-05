@@ -19,6 +19,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <memory>
+#include <fstream>
 #include "JsonParser.h"
 #include "JsonObject.h"
 #include "JsonValue.h"
@@ -29,6 +30,21 @@ Argonaut::Argonaut() {
 
 }
 
+void Argonaut::parseBigFile( const std::string & filename ) {
+    std::ifstream in( filename.c_str() );
+    if( in.is_open() ) {
+        JsonParser parser;
+        std::unique_ptr<JsonObject> object = parser.parseJson( &in );
+
+        std::cout << *object << std::endl;
+    } else {
+        std::cerr << "Could not open file " << filename <<
+                std::endl;
+    }
+
+    in.close();
+}
+
 void Argonaut::runExampleUsage() const {
 
 	std::string json( "{ \"name\" : \"Malcolm Reynolds\" , "
@@ -37,25 +53,22 @@ void Argonaut::runExampleUsage() const {
 
 	JsonParser parser;
 	std::unique_ptr<JsonObject> object = parser.parseJson( json );
-	const std::vector<JsonValue *> & members = object->getMembers();
-	// alternatively, use:
-	// auto members = object->getMembers();
 	
 	std::cout << "Raw JSON: " << json << std::endl;
 
-	for( auto value : members ) {
-	    if( value->getName() == "name" && value->isString() ) {
-			std::cout << value->getString() << std::endl;
-	    } else if( value->isBoolean() ) {
-		if( value->getBoolean() ) {
+	for( auto it = object->begin(); it != object->end(); ++it ) {
+	    if( (*it)->getName() == "name" && (*it)->isString() ) {
+			std::cout << (*it)->getString() << std::endl;
+	    } else if( (*it)->isBoolean() ) {
+		if( (*it)->getBoolean() ) {
 		    std::cout << "Mal is a wanted man!" << std::endl;
 		} else {
 		    std::cout << "Mal is not wanted" << std::endl;
 		}
-	    } else if( value->getName() == "age" ) {
-			std::cout << "Mal is " << value->getInteger() << " years old." << std::endl;
-	    } else if( value->getName() == "vehicle" ) {
-			std::cout << "Mal drives a " << value->getString() << ". Sexy." << std::endl;
+	    } else if( (*it)->getName() == "age" ) {
+			std::cout << "Mal is " << (*it)->getInteger() << " years old." << std::endl;
+	    } else if( (*it)->getName() == "vehicle" ) {
+			std::cout << "Mal drives a " << (*it)->getString() << ". Sexy." << std::endl;
 	    }
 	}
 }
@@ -123,34 +136,33 @@ void Argonaut::printArray( const std::vector<JsonValue *> & values ) const {
 void Argonaut::printParsedJson( const JsonObject & object, 
 		const std::string & indent ) const {
 	std::string nextIndent = indent + "\t";
-	const std::vector<JsonValue *> & members = object.getMembers();
 	
-	for( auto pair : members ) {
-		std::cout << indent << "Name: " << pair->getName() << std::endl;
-		if( pair->isArray() ) {
+	for( auto pair = object.begin(); pair != object.end(); ++pair ) {
+		std::cout << indent << "Name: " << (*pair)->getName() << std::endl;
+		if( (*pair)->isArray() ) {
 			std::cout << indent << "Type: Array" << std::endl;
 			std::cout << indent << "Values: ";
-			printArray( pair->getArray() );
-		} else if( pair->isBoolean() ) {
+			printArray( (*pair)->getArray() );
+		} else if( (*pair)->isBoolean() ) {
 			std::cout << indent << "Type: Boolean" << std::endl;
 			std::cout << indent << "Value: ";
-			if( pair->getBoolean() ) {
+			if( (*pair)->getBoolean() ) {
 				std::cout << "true" << std::endl;
 			} else {
 				std::cout << "false" << std::endl;
 			}
-		} else if( pair->isInteger() ) {
+		} else if( (*pair)->isInteger() ) {
 			std::cout << indent << "Type: Integer" << std::endl;
-			std::cout << indent << "Value: " << pair->getInteger() << std::endl;
-		} else if( pair->isObject() ) {
+			std::cout << indent << "Value: " << (*pair)->getInteger() << std::endl;
+		} else if( (*pair)->isObject() ) {
 			std::cout << indent << "Type: Object" << std::endl;
-			printParsedJson( pair->getObject(), nextIndent );
-		} else if( pair->isReal() ) {
+			printParsedJson( (*pair)->getObject(), nextIndent );
+		} else if( (*pair)->isReal() ) {
 			std::cout << indent << "Type: Real" << std::endl;
-			std::cout << indent << "Value: " << pair->getReal() << std::endl;
-		} else if( pair->isString() ) {
+			std::cout << indent << "Value: " << (*pair)->getReal() << std::endl;
+		} else if( (*pair)->isString() ) {
 			std::cout << indent << "Type: String" << std::endl;
-			std::cout << indent << "Value: " << pair->getString() << std::endl;
+			std::cout << indent << "Value: " << (*pair)->getString() << std::endl;
 		} else {
 			break;
 		}
